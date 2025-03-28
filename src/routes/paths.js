@@ -8,6 +8,12 @@ const ROOTS = {
 // ----------------------------------------------------------------------
 
 export const paths = {
+  studentAuth: {
+    signIn: '/sign-in',
+    signUp: '/sign-up',
+  },
+
+
   faqs: '/faqs',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
   // AUTH

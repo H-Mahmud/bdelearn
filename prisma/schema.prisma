@@ -1,0 +1,174 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String          @id @default(cuid())
+  email         String
+  phoneNumber   String
+  firstName     String
+  LastName      String
+  address       String?
+  bio           String?
+  gender        Gender?
+  meta          UserMeta[]
+  profile       Profile         @default(STUDENT)
+  profileStatus ProfileStatus[]
+  profileMeta   ProfileMeta[]
+
+  referrerId   String?
+  referrer     User?          @relation("ReferrerRelation", fields: [referrerId], references: [id])
+  referees     User[]         @relation("ReferrerRelation")
+  salary       Salary[]
+  commission   Commission[]
+  balance      Balance[]
+  notification Notification[]
+  nodes        Node[]         @relation("Nodes")
+  mappers      Node[]         @relation("Mappers")
+  mapped       Node[]         @relation("Mapped")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([id, profile])
+  @@unique([email, profile])
+  @@unique([phoneNumber, profile])
+}
+
+enum Profile {
+  STUDENT
+  TRAINER
+  COUNSELOR
+  CONTROLLER
+  ADMIN
+  SUPER_ADMIN
+}
+
+model UserMeta {
+  id     String @id @default(cuid())
+  userId String
+  key    String
+  value  String
+
+  User User? @relation(fields: [userId], references: [id])
+}
+
+model ProfileMeta {
+  id          String  @id @default(cuid())
+  userId      String
+  userProfile Profile
+  key         String
+  value       String
+  User        User    @relation(fields: [userId, userProfile], references: [id, profile])
+}
+
+model ProfileStatus {
+  id          String  @id @default(cuid())
+  userId      String
+  userProfile Profile
+  status      Status  @default(INACTIVE)
+
+  User User @relation(fields: [userId, userProfile], references: [id, profile])
+}
+
+enum Status {
+  PENDING
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  ARCHIVED
+  DELETED
+  BLOCKED
+  DRAFT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  PREFER_NOT_TO_SAY
+}
+
+model Salary {
+  id          String  @id @default(cuid())
+  userId      String
+  userProfile Profile
+  amount      Float
+
+  User User @relation(fields: [userId, userProfile], references: [id, profile])
+}
+
+model Commission {
+  id          String  @id @default(cuid())
+  userId      String
+  userProfile Profile
+  commission  Float   @default(0.0)
+
+  User User @relation(fields: [userId, userProfile], references: [id, profile])
+}
+
+model Balance {
+  id          String   @id @default(cuid())
+  userId      String
+  userProfile Profile
+  amount      Float    @default(0.0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  User User @relation(fields: [userId, userProfile], references: [id, profile])
+
+  transactionsOutgoing Transaction[] @relation("PayerTransactions")
+  transactionsIncoming Transaction[] @relation("PayeeTransactions")
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  amount    Float    @default(0.0)
+  reason    String?
+  details   Json?
+  status    String?
+  payerId   String
+  payeeId   String
+  createdAt DateTime @default(now())
+
+  payer Balance @relation("PayerTransactions", fields: [payerId], references: [id])
+  payee Balance @relation("PayeeTransactions", fields: [payeeId], references: [id])
+}
+
+model Node {
+  id            String  @id @default(cuid())
+  nodeId        String
+  nodeProfile   Profile
+  mapperId      String
+  mapperProfile Profile
+  mappedId      String
+  mappedProfile Profile
+
+  node   User @relation("Nodes", fields: [nodeId, nodeProfile], references: [id, profile])
+  mapper User @relation("Mappers", fields: [mappedId, mapperProfile], references: [id, profile])
+  mapped User @relation("Mapped", fields: [mappedId, mappedProfile], references: [id, profile])
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  userId      String
+  userProfile Profile
+  user        User      @relation(fields: [userId, userProfile], references: [id, profile])
+  title       String
+  message     String
+  details     Json?
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  readAt      DateTime?
+}

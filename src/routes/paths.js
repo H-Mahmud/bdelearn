@@ -11,8 +11,10 @@ export const paths = {
   studentAuth: {
     signIn: '/sign-in',
     signUp: '/sign-up',
+    verify: '/verify',
+    forgotPassword: '/forgot-password',
+    resetPassword: '/reset-password',
   },
-
 
   faqs: '/faqs',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',

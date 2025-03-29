@@ -25,6 +25,7 @@ model User {
   gender      Gender?
   meta        UserMeta[]
   profile     Profile    @default(STUDENT)
+  status      Status     @default(INACTIVE)
 
   referrerId   String?
   referrer     User?          @relation("ReferrerRelation", fields: [referrerId], references: [id])

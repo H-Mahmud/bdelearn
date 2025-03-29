@@ -1,26 +1,26 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-
-import LoadingButton from '@mui/lab/LoadingButton';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
+import InputAdornment from '@mui/material/InputAdornment';
 
-import { RouterLink } from 'src/routes/components';
 import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { Field, Form } from 'src/components/hook-form';
-import { Iconify } from 'src/components/iconify';
-import userSignUp from './sign-up-actions';
 import { SignUpSchema } from 'src/schema/userSchema';
 
+import { Iconify } from 'src/components/iconify';
+import { Form, Field } from 'src/components/hook-form';
+
+import userSignUp from './sign-up-actions';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +31,9 @@ export default function SignUpForm() {
     firstName: '',
     lastName: '',
     email: '',
+    phoneNumber: '',
     password: '',
+    referralCode: '',
   };
 
   const methods = useForm({
@@ -46,9 +48,7 @@ export default function SignUpForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-    //   await new Promise((resolve) => setTimeout(resolve, 500));
-    //   console.info('DATA', data);
-    await userSignUp(data)
+      await userSignUp(data);
     } catch (error) {
       console.error(error);
     }
@@ -78,6 +78,7 @@ export default function SignUpForm() {
       </Stack>
 
       <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+      <Field.Text name="phoneNumber" label="Whatsapp Number" InputLabelProps={{ shrink: true }} />
 
       <Field.Text
         name="password"
@@ -95,6 +96,8 @@ export default function SignUpForm() {
           ),
         }}
       />
+
+      <Field.Text name="referralCode" label="Referral Code" InputLabelProps={{ shrink: true }} />
 
       <LoadingButton
         fullWidth
@@ -131,7 +134,6 @@ export default function SignUpForm() {
       .
     </Typography>
   );
-
 
   return (
     <>

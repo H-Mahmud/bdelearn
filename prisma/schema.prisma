@@ -18,7 +18,7 @@ model User {
   email         String
   phoneNumber   String
   firstName     String
-  LastName      String
+  lastName      String
   address       String?
   bio           String?
   gender        Gender?

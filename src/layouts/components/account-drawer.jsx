@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -17,6 +17,7 @@ import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { _mock } from 'src/_mock';
 import { varAlpha } from 'src/theme/styles';
+import { fetchUserData } from 'src/server-actions/user';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
@@ -38,7 +39,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
 
   const pathname = usePathname();
 
-  const { user } = useMockedUser();
+  const { user: mockUser } = useMockedUser();
 
   const [open, setOpen] = useState(false);
 
@@ -58,11 +59,28 @@ export function AccountDrawer({ data = [], sx, ...other }) {
     [handleCloseDrawer, router]
   );
 
+  /**
+   * @type {[import('@prisma/client').User | null]}
+   */
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function loadUserData() {
+      const userData = await fetchUserData();
+      setUser(userData);
+    }
+
+    loadUserData();
+  }, []);
+  if (!user) return null;
+
+  const displayName = user.firstName + user.lastName;
+
   const renderAvatar = (
     <AnimateAvatar
       width={96}
       slotProps={{
-        avatar: { src: user?.photoURL, alt: user?.displayName },
+        avatar: { src: mockUser?.photoURL, alt: displayName },
         overlay: {
           border: 2,
           spacing: 3,
@@ -70,7 +88,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
         },
       }}
     >
-      {user?.displayName?.charAt(0).toUpperCase()}
+      {displayName.charAt(0).toUpperCase()}
     </AnimateAvatar>
   );
 
@@ -79,8 +97,8 @@ export function AccountDrawer({ data = [], sx, ...other }) {
       <AccountButton
         open={open}
         onClick={handleOpenDrawer}
-        photoURL={user?.photoURL}
-        displayName={user?.displayName}
+        photoURL={mockUser?.photoURL}
+        displayName={displayName}
         sx={sx}
         {...other}
       />
@@ -104,11 +122,11 @@ export function AccountDrawer({ data = [], sx, ...other }) {
             {renderAvatar}
 
             <Typography variant="subtitle1" noWrap sx={{ mt: 2 }}>
-              {user?.displayName}
+              {displayName}
             </Typography>
 
             <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }} noWrap>
-              {user?.email}
+              {user.email}
             </Typography>
           </Stack>
 

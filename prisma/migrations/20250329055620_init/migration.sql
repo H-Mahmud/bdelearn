@@ -13,7 +13,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
-    "LastName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "address" TEXT,
     "bio" TEXT,
     "gender" "Gender",

@@ -14,18 +14,17 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  email         String
-  phoneNumber   String
-  firstName     String
-  lastName      String
-  address       String?
-  bio           String?
-  gender        Gender?
-  meta          UserMeta[]
-  profile       Profile         @default(STUDENT)
-  profileStatus ProfileStatus[]
-  profileMeta   ProfileMeta[]
+  id          String     @id @default(cuid())
+  email       String
+  phoneNumber String
+  firstName   String
+  lastName    String
+  password    String
+  address     String?
+  bio         String?
+  gender      Gender?
+  meta        UserMeta[]
+  profile     Profile    @default(STUDENT)
 
   referrerId   String?
   referrer     User?          @relation("ReferrerRelation", fields: [referrerId], references: [id])
@@ -41,7 +40,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([id, profile])
   @@unique([email, profile])
   @@unique([phoneNumber, profile])
 }
@@ -61,25 +59,7 @@ model UserMeta {
   key    String
   value  String
 
-  User User? @relation(fields: [userId], references: [id])
-}
-
-model ProfileMeta {
-  id          String  @id @default(cuid())
-  userId      String
-  userProfile Profile
-  key         String
-  value       String
-  User        User    @relation(fields: [userId, userProfile], references: [id, profile])
-}
-
-model ProfileStatus {
-  id          String  @id @default(cuid())
-  userId      String
-  userProfile Profile
-  status      Status  @default(INACTIVE)
-
-  User User @relation(fields: [userId, userProfile], references: [id, profile])
+  user User? @relation(fields: [userId], references: [id])
 }
 
 enum Status {
@@ -101,32 +81,29 @@ enum Gender {
 }
 
 model Salary {
-  id          String  @id @default(cuid())
-  userId      String
-  userProfile Profile
-  amount      Float
+  id     String @id @default(cuid())
+  userId String
+  amount Float
 
-  User User @relation(fields: [userId, userProfile], references: [id, profile])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Commission {
-  id          String  @id @default(cuid())
-  userId      String
-  userProfile Profile
-  commission  Float   @default(0.0)
+  id         String @id @default(cuid())
+  userId     String
+  commission Float  @default(0.0)
 
-  User User @relation(fields: [userId, userProfile], references: [id, profile])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Balance {
-  id          String   @id @default(cuid())
-  userId      String
-  userProfile Profile
-  amount      Float    @default(0.0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Float    @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  User User @relation(fields: [userId, userProfile], references: [id, profile])
+  user User @relation(fields: [userId], references: [id])
 
   transactionsOutgoing Transaction[] @relation("PayerTransactions")
   transactionsIncoming Transaction[] @relation("PayeeTransactions")
@@ -147,28 +124,24 @@ model Transaction {
 }
 
 model Node {
-  id            String  @id @default(cuid())
-  nodeId        String
-  nodeProfile   Profile
-  mapperId      String
-  mapperProfile Profile
-  mappedId      String
-  mappedProfile Profile
+  id       String @id @default(cuid())
+  nodeId   String
+  mapperId String
+  mappedId String
 
-  node   User @relation("Nodes", fields: [nodeId, nodeProfile], references: [id, profile])
-  mapper User @relation("Mappers", fields: [mappedId, mapperProfile], references: [id, profile])
-  mapped User @relation("Mapped", fields: [mappedId, mappedProfile], references: [id, profile])
+  node   User @relation("Nodes", fields: [nodeId], references: [id], map: "Node_nodeId_fkey")
+  mapper User @relation("Mappers", fields: [mapperId], references: [id], map: "Node_mapperId_fkey")
+  mapped User @relation("Mapped", fields: [mappedId], references: [id], map: "Node_mappedId_fkey")
 }
 
 model Notification {
-  id          String    @id @default(cuid())
-  userId      String
-  userProfile Profile
-  user        User      @relation(fields: [userId, userProfile], references: [id, profile])
-  title       String
-  message     String
-  details     Json?
-  isRead      Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  readAt      DateTime?
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  details   Json?
+  isRead    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  readAt    DateTime?
 }

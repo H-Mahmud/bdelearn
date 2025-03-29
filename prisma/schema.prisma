@@ -27,7 +27,7 @@ model User {
   profile     Profile    @default(STUDENT)
   status      Status     @default(INACTIVE)
 
-  myReferral   String?
+  referralCode String?
   referrerId   String?
   referrer     User?          @relation("ReferrerRelation", fields: [referrerId], references: [id])
   referees     User[]         @relation("ReferrerRelation")

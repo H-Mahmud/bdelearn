@@ -44,11 +44,15 @@ export default function SignUpForm() {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    setError,
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await userSignUp(data);
+      const result = await userSignUp(data);
+      if (result?.field && result?.error) {
+        setError(result.field, { type: 'server', message: result.error });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -77,8 +81,19 @@ export default function SignUpForm() {
         <Field.Text name="lastName" label="Last name" InputLabelProps={{ shrink: true }} />
       </Stack>
 
-      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
-      <Field.Text name="phoneNumber" label="Whatsapp Number" InputLabelProps={{ shrink: true }} />
+      <Field.Text
+        name="email"
+        label="Email address"
+        InputLabelProps={{ shrink: true }}
+        helperText={methods.formState.errors.email?.message}
+      />
+
+      <Field.Text
+        name="phoneNumber"
+        label="Whatsapp Number"
+        InputLabelProps={{ shrink: true }}
+        helperText={methods.formState.errors.phoneNumber?.message}
+      />
 
       <Field.Text
         name="password"
@@ -97,7 +112,12 @@ export default function SignUpForm() {
         }}
       />
 
-      <Field.Text name="referralCode" label="Referral Code" InputLabelProps={{ shrink: true }} />
+      <Field.Text
+        name="referralCode"
+        label="Referral Code"
+        InputLabelProps={{ shrink: true }}
+        helperText={methods.formState.errors.referralCode?.message}
+      />
 
       <LoadingButton
         fullWidth

@@ -32,6 +32,7 @@ export default function SignUpForm() {
     lastName: '',
     email: '',
     phoneNumber: '',
+    profile: 'STUDENT',
     password: '',
     referralCode: '',
   };
@@ -118,6 +119,12 @@ export default function SignUpForm() {
         InputLabelProps={{ shrink: true }}
         helperText={methods.formState.errors.referralCode?.message}
       />
+
+      {methods.formState.errors.root?.message && (
+        <Typography variant="body2" color="error.main">
+          {methods.formState.errors.root?.message}
+        </Typography>
+      )}
 
       <LoadingButton
         fullWidth

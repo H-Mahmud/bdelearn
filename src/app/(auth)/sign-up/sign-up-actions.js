@@ -14,23 +14,25 @@ import {
   isUserRegisteredByPhoneNumber,
 } from 'src/model/user';
 
+// ----------------------------------------------------------------------
+
 export default async function userSignUp(formData) {
   const { success, data } = SignUpSchema.safeParse(formData);
   if (!success) {
-    return { field: null, error: 'Invalid form data' };
+    return { field: 'root', error: 'Invalid form data' };
   }
 
-  const { firstName, lastName, email, phoneNumber, password, referralCode } = data;
+  const { firstName, lastName, email, phoneNumber, profile, password, referralCode } = data;
 
   try {
-    if (await isUserRegisteredByEmail(email, 'STUDENT')) {
+    if (await isUserRegisteredByEmail(email, profile)) {
       return {
         field: 'email',
         error: 'An account with this email already exists.',
       };
     }
 
-    if (await isUserRegisteredByPhoneNumber(phoneNumber, 'STUDENT')) {
+    if (await isUserRegisteredByPhoneNumber(phoneNumber, profile)) {
       return {
         field: 'phoneNumber',
         error: 'An account with this phone number already exists.',
@@ -41,7 +43,7 @@ export default async function userSignUp(formData) {
     if (!referrer) {
       return {
         field: 'referralCode',
-        error: 'Invalid referral Code, No student found by the referral code.',
+        error: 'Invalid referral Code, No user found with this referral code.',
       };
     }
     const myReferral = newReferralCode();
@@ -54,11 +56,12 @@ export default async function userSignUp(formData) {
       password,
       myReferral,
       referrer,
-      'PENDING'
+      'PENDING',
+      profile
     );
   } catch (e) {
     console.log(e);
-    return { field: null, error: 'Unknown server error.' };
+    return { field: 'root', error: 'Unknown server error.' };
   }
 
   return redirect(paths.dashboard.root);

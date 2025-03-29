@@ -1,7 +1,7 @@
 'use client';
 
-import { z as zod } from 'zod';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Link from '@mui/material/Link';
@@ -16,6 +16,8 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { SignInSchema } from 'src/schema/userSchema';
+
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
@@ -23,23 +25,11 @@ import userSignIn from './sign-in-action';
 
 // ----------------------------------------------------------------------
 
-export const SignInSchema = zod.object({
-  email: zod
-    .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
-  password: zod
-    .string()
-    .min(1, { message: 'Password is required!' })
-    .min(6, { message: 'Password must be at least 6 characters!' }),
-});
-
-// ----------------------------------------------------------------------
-
 export default function SignInForm() {
   const password = useBoolean();
+  const router = useRouter();
 
-  const defaultValues = { email: '', password: '' };
+  const defaultValues = { email: '', password: '', profile: 'STUDENT' };
 
   const methods = useForm({
     resolver: zodResolver(SignInSchema),
@@ -49,11 +39,17 @@ export default function SignInForm() {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    setError,
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await userSignIn(data);
+      const result = await userSignIn(data);
+      if (result?.success) {
+        router.push(result.redirectUrl);
+      } else if (result?.field && result?.error) {
+        setError(result.field, { type: 'server', message: result.error });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -77,7 +73,12 @@ export default function SignInForm() {
 
   const renderForm = (
     <Stack spacing={3}>
-      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+      <Field.Text
+        name="email"
+        label="Email address"
+        InputLabelProps={{ shrink: true }}
+        helperText={methods.formState.errors.email?.message}
+      />
 
       <Stack spacing={1.5}>
         <Link
@@ -96,6 +97,7 @@ export default function SignInForm() {
           placeholder="6+ characters"
           type={password.value ? 'text' : 'password'}
           InputLabelProps={{ shrink: true }}
+          helperText={methods.formState.errors.password?.message}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -107,6 +109,12 @@ export default function SignInForm() {
           }}
         />
       </Stack>
+
+      {methods.formState.errors.root?.message && (
+        <Typography variant="body2" color="error.main">
+          {methods.formState.errors.root?.message}
+        </Typography>
+      )}
 
       <LoadingButton
         fullWidth

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 
@@ -8,25 +9,23 @@ import { CONFIG } from 'src/config-global';
 
 import { SplashScreen } from 'src/components/loading-screen';
 
-import { useAuthContext } from '../hooks';
-
 // ----------------------------------------------------------------------
 
 export function GuestGuard({ children }) {
+  const session = useSession();
   const router = useRouter();
 
   const searchParams = useSearchParams();
 
-  const { loading, authenticated } = useAuthContext();
+  const authenticated = session.status === 'authenticated';
+  const loading = session.status === 'loading';
 
   const [isChecking, setIsChecking] = useState(true);
 
   const returnTo = searchParams.get('returnTo') || CONFIG.auth.redirectPath;
 
   const checkPermissions = async () => {
-    if (loading) {
-      return;
-    }
+    if (loading) return;
 
     if (authenticated) {
       router.replace(returnTo);

@@ -4,12 +4,14 @@ import { redirect } from 'next/navigation';
 
 import { paths } from 'src/routes/paths';
 
+import { newReferralCode } from 'src/utils/hash';
+
 import { SignUpSchema } from 'src/schema/userSchema';
 import {
-  createStudent,
-  getStudentByReferCode,
-  isStudentRegisteredByEmail,
-  isStudentRegisteredByPhoneNumber,
+  createUser,
+  getUserIdByReferCode,
+  isUserRegisteredByEmail,
+  isUserRegisteredByPhoneNumber,
 } from 'src/model/user';
 
 export default async function userSignUp(formData) {
@@ -18,36 +20,46 @@ export default async function userSignUp(formData) {
     return { field: null, error: 'Invalid form data' };
   }
 
-  const { firstName, lastName, email, phoneNumber, referralCode } = data;
+  const { firstName, lastName, email, phoneNumber, password, referralCode } = data;
 
   try {
-    if (await isStudentRegisteredByEmail(email)) {
+    if (await isUserRegisteredByEmail(email, 'STUDENT')) {
       return {
         field: 'email',
         error: 'An account with this email already exists.',
       };
     }
 
-    if (await isStudentRegisteredByPhoneNumber(phoneNumber)) {
+    if (await isUserRegisteredByPhoneNumber(phoneNumber, 'STUDENT')) {
       return {
         field: 'phoneNumber',
         error: 'An account with this phone number already exists.',
       };
     }
 
-    const referrer = await getStudentByReferCode(referralCode);
+    const referrer = await getUserIdByReferCode(referralCode, 'STUDENT');
     if (!referrer) {
       return {
         field: 'referralCode',
         error: 'Invalid referral Code, No student found by the referral code.',
       };
     }
+    const myReferral = newReferralCode();
 
-    await createStudent(firstName, lastName, email, phoneNumber, referrer);
+    await createUser(
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+      myReferral,
+      referrer,
+      'PENDING'
+    );
   } catch (e) {
     console.log(e);
     return { field: null, error: 'Unknown server error.' };
   }
 
-  return redirect(paths.dashboard);
+  return redirect(paths.dashboard.root);
 }

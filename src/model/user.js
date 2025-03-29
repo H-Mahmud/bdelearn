@@ -10,6 +10,7 @@ import db from 'src/db';
  * @param {string} referralCode
  * @param {string} referrer
  * @param {import('@prisma/client').Status} status
+ * @param {import('@prisma/client').Profile} profile
  */
 export async function createUser(
   firstName,
@@ -19,7 +20,8 @@ export async function createUser(
   password,
   referralCode,
   referrer,
-  status
+  status,
+  profile
 ) {
   return db.user.create({
     data: {
@@ -33,6 +35,7 @@ export async function createUser(
         connect: referrer,
       },
       status,
+      profile,
     },
   });
 }
@@ -41,12 +44,14 @@ export async function createUser(
  * Get user id by user referral code
  *
  * @param {string} referralCode
+ * @param {import('@prisma/client').Profile} profile
  * @returns
  */
-export async function getUserIdByReferCode(referralCode) {
+export async function getUserIdByReferCode(referralCode, profile) {
   return db.user.findFirst({
     where: {
       referralCode,
+      profile,
     },
     select: {
       id: true,
@@ -57,23 +62,43 @@ export async function getUserIdByReferCode(referralCode) {
 /**
  *
  * @param {string} email
+ *  @param {import('@prisma/client').Profile} profile
  * @returns
  */
-export async function isUserRegisteredByEmail(email) {
+export async function isUserRegisteredByEmail(email, profile) {
   return db.user.count({
-    where: { email },
+    where: { email, profile },
   });
 }
 
 /**
  *
  * @param {string} phoneNumber
+ * @param {import('@prisma/client').Profile} profile
  * @returns
  */
-export async function isUserRegisteredByPhoneNumber(phoneNumber) {
+export async function isUserRegisteredByPhoneNumber(phoneNumber, profile) {
   return db.user.count({
     where: {
       phoneNumber,
+      profile,
+    },
+  });
+}
+
+/**
+ *
+ * @param {string} email
+ * @param {import('@prisma/client').Profile} profile
+ * @param {string} password
+ * @returns
+ */
+export async function getUserByCredential(email, profile, password) {
+  return db.user.findFirst({
+    where: {
+      email,
+      profile,
+      password,
     },
   });
 }

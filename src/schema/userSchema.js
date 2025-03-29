@@ -26,3 +26,28 @@ export const SignUpSchema = zod.object({
       message: 'Referral code must be exactly 8 digits and contain only numbers',
     }),
 });
+
+/**
+ * @type {import('@prisma/client').Profile[]}
+ */
+const validProfile = [
+  'SUPER_ADMIN',
+  'ADMIN',
+  'CONTROLLER',
+  'COUNSELOR',
+  'STUDENT',
+  'TEACHER',
+  'STUDENT',
+];
+
+export const SignInSchema = zod.object({
+  email: zod
+    .string()
+    .min(1, { message: 'Email is required!' })
+    .email({ message: 'Email must be a valid email address!' }),
+  profile: zod.enum(validProfile),
+  password: zod
+    .string()
+    .min(1, { message: 'Password is required!' })
+    .min(6, { message: 'Password must be at least 6 characters!' }),
+});

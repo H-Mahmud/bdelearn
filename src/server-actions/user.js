@@ -20,3 +20,13 @@ export async function fetchUserData() {
 
   return user;
 }
+
+export async function fetchUserList() {
+  const users = await db.user.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return users;
+}

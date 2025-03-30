@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -20,8 +20,10 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useSetState } from 'src/hooks/use-set-state';
 
 import { varAlpha } from 'src/theme/styles';
+import { _roles, _userList } from 'src/_mock';
+import { fetchUserList } from 'src/server-actions/user';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { _roles, _userList, USER_STATUS_OPTIONS } from 'src/_mock';
+import { USER_STATUS_OPTIONS } from 'src/app/config/config-user';
 
 import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
@@ -47,13 +49,15 @@ import { UserTableFiltersResult } from '../user-table-filters-result';
 
 // ----------------------------------------------------------------------
 
+/**
+ * @type {{ value: import('@prisma/client').Status, label: string }[]}
+ */
 const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name' },
+  { id: 'company', label: 'Email', width: 220 },
   { id: 'phoneNumber', label: 'Phone number', width: 180 },
-  { id: 'company', label: 'Company', width: 220 },
-  { id: 'role', label: 'Role', width: 180 },
   { id: 'status', label: 'Status', width: 100 },
   { id: '', width: 88 },
 ];
@@ -68,8 +72,19 @@ export function UserListView() {
   const confirm = useBoolean();
 
   const [tableData, setTableData] = useState(_userList);
-
   const filters = useSetState({ name: '', role: [], status: 'all' });
+
+  /**
+   * @type {[import('@prisma/client').User[] | null]}
+   */
+  const [users, setUsers] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const userData = await fetchUserList();
+      setUsers(userData);
+    })();
+  }, []);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -125,16 +140,14 @@ export function UserListView() {
     [filters, table]
   );
 
+  if (!users) return null;
+
   return (
     <>
       <DashboardContent>
         <CustomBreadcrumbs
-          heading="List"
-          links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'User', href: paths.dashboard.user.root },
-            { name: 'List' },
-          ]}
+          heading="Student List"
+          links={[{ name: 'Dashboard', href: paths.dashboard.root }, { name: 'Student List' }]}
           action={
             <Button
               component={RouterLink}
@@ -171,9 +184,11 @@ export function UserListView() {
                       'soft'
                     }
                     color={
-                      (tab.value === 'active' && 'success') ||
-                      (tab.value === 'pending' && 'warning') ||
-                      (tab.value === 'banned' && 'error') ||
+                      (tab.value === 'ACTIVE' && 'success') ||
+                      (tab.value === 'INACTIVE' && 'secondary') ||
+                      (tab.value === 'PENDING' && 'info') ||
+                      (tab.value === 'SUSPENDED' && 'warning') ||
+                      (tab.value === 'BLOCKED' && 'error') ||
                       'default'
                     }
                   >

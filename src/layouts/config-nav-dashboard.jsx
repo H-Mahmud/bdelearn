@@ -11,6 +11,7 @@ const icon = (name) => <SvgColor src={`${CONFIG.site.basePath}/assets/icons/navb
 const ICONS = {
   subAdmin: icon('ic-sub-admin'),
   students: icon('ic-student'),
+  account: icon('ic-account'),
   job: icon('ic-job'),
   blog: icon('ic-blog'),
   chat: icon('ic-chat'),
@@ -68,6 +69,11 @@ export const navData = [
         title: 'Student List',
         path: paths.dashboard.studentList,
         icon: ICONS.students,
+      },
+      {
+        title: 'Account',
+        path: paths.dashboard.account,
+        icon: ICONS.account,
       },
       {
         title: 'User',

@@ -20,9 +20,9 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useSetState } from 'src/hooks/use-set-state';
 
 import { varAlpha } from 'src/theme/styles';
-import { fetchUserList } from 'src/server-actions/user';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { USER_STATUS_OPTIONS } from 'src/app/config/config-user';
+import { fetchUserList, fetchCountUserByStatus } from 'src/server-actions/user';
 
 import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
@@ -77,6 +77,8 @@ export function UserListView() {
   const [tableData, setTableData] = useState([]);
   const filters = useSetState({ name: '', role: [], status: 'all' });
 
+  const [userCount, setUserCount] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -86,7 +88,18 @@ export function UserListView() {
         toast.error('Failed to fetch user data');
       }
     })();
-  }, [filters.state]); // Re-fetch data when filters change
+  }, [filters.state]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const userCountData = await fetchCountUserByStatus();
+        setUserCount(userCountData);
+      } catch (error) {
+        toast.error('Failed to fetch user count data');
+      }
+    })();
+  }, []);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -194,9 +207,7 @@ export function UserListView() {
                       'default'
                     }
                   >
-                    {['active', 'pending', 'banned', 'rejected'].includes(tab.value)
-                      ? tableData.filter((user) => user.status === tab.value).length
-                      : tableData.length}
+                    {userCount[tab.value] ? userCount[tab.value] : 0}
                   </Label>
                 }
               />

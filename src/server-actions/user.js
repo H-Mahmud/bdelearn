@@ -61,3 +61,18 @@ export async function fetchUserList(filters = {}) {
     }),
   }));
 }
+
+// Count User by Status
+export async function fetchCountUserByStatus() {
+  const userCount = await db.user.groupBy({
+    by: ['status'],
+    _count: {
+      id: true,
+    },
+  });
+
+  return userCount.reduce((acc, { status, _count }) => {
+    acc[status] = _count.id;
+    return acc;
+  }, {});
+}

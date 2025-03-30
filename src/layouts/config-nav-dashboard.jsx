@@ -9,6 +9,7 @@ import { SvgColor } from 'src/components/svg-color';
 const icon = (name) => <SvgColor src={`${CONFIG.site.basePath}/assets/icons/navbar/${name}.svg`} />;
 
 const ICONS = {
+  subAdmin: icon('ic-sub-admin'),
   students: icon('ic-student'),
   job: icon('ic-job'),
   blog: icon('ic-blog'),
@@ -58,6 +59,11 @@ export const navData = [
   {
     subheader: 'Management',
     items: [
+      {
+        title: 'Sub Admin List',
+        path: paths.dashboard.subAdminList,
+        icon: ICONS.subAdmin,
+      },
       {
         title: 'Student List',
         path: paths.dashboard.studentList,

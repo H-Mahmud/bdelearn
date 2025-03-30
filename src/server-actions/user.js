@@ -76,3 +76,36 @@ export async function fetchCountUserByStatus() {
     return acc;
   }, {});
 }
+
+export async function fetchSubAdminList() {
+  const users = await db.user.findMany({
+    where: {
+      profile: {
+        not: 'STUDENT',
+      },
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      phoneNumber: true,
+      referralCode: true,
+      status: true,
+      profile: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  return users.map((user) => ({
+    ...user,
+    name: `${user.firstName} ${user.lastName}`,
+    createdAt: user.createdAt.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }),
+  }));
+}

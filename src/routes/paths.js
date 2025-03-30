@@ -51,6 +51,7 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
+    subAdminList: `${ROOTS.DASHBOARD}/sub-admin-list`,
     studentList: `${ROOTS.DASHBOARD}/student-list`,
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,

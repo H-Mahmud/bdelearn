@@ -63,7 +63,7 @@ export function UserCard({ user }) {
       <ListItemText
         sx={{ mt: 7, mb: 1 }}
         primary={user.name}
-        secondary={user.role}
+        secondary={user.profile}
         primaryTypographyProps={{ typography: 'subtitle1' }}
         secondaryTypographyProps={{ component: 'span', mt: 0.5 }}
       />

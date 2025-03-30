@@ -20,7 +20,6 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useSetState } from 'src/hooks/use-set-state';
 
 import { varAlpha } from 'src/theme/styles';
-import { _roles, _userList } from 'src/_mock';
 import { fetchUserList } from 'src/server-actions/user';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { USER_STATUS_OPTIONS } from 'src/app/config/config-user';
@@ -56,8 +55,9 @@ const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name' },
-  { id: 'company', label: 'Email', width: 220 },
+  { id: 'referralCode', label: 'Referral ID', width: 180 },
   { id: 'phoneNumber', label: 'Phone number', width: 180 },
+  { id: 'createdAt', label: 'Joined', width: 180 },
   { id: 'status', label: 'Status', width: 100 },
   { id: '', width: 88 },
 ];
@@ -71,20 +71,22 @@ export function UserListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState(_userList);
-  const filters = useSetState({ name: '', role: [], status: 'all' });
-
   /**
    * @type {[import('@prisma/client').User[] | null]}
    */
-  const [users, setUsers] = useState(null);
+  const [tableData, setTableData] = useState([]);
+  const filters = useSetState({ name: '', role: [], status: 'all' });
 
   useEffect(() => {
     (async () => {
-      const userData = await fetchUserList();
-      setUsers(userData);
+      try {
+        const userData = await fetchUserList(filters.state);
+        setTableData(userData);
+      } catch (error) {
+        toast.error('Failed to fetch user data');
+      }
     })();
-  }, []);
+  }, [filters.state]); // Re-fetch data when filters change
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -140,7 +142,7 @@ export function UserListView() {
     [filters, table]
   );
 
-  if (!users) return null;
+  if (!tableData) return null;
 
   return (
     <>
@@ -201,11 +203,7 @@ export function UserListView() {
             ))}
           </Tabs>
 
-          <UserTableToolbar
-            filters={filters}
-            onResetPage={table.onResetPage}
-            options={{ roles: _roles }}
-          />
+          <UserTableToolbar filters={filters} onResetPage={table.onResetPage} />
 
           {canReset && (
             <UserTableFiltersResult

@@ -51,9 +51,11 @@ export function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRo
           </Stack>
         </TableCell>
 
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.referralCode}</TableCell>
+
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.phoneNumber}</TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.company}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.createdAt}</TableCell>
 
         <TableCell>
           <Label

@@ -53,7 +53,13 @@ export const paths = {
     root: ROOTS.DASHBOARD,
     subAdminList: `${ROOTS.DASHBOARD}/sub-admin-list`,
     studentList: `${ROOTS.DASHBOARD}/student-list`,
-    account: `${ROOTS.DASHBOARD}/account`,
+    account: {
+      root: `${ROOTS.DASHBOARD}/account`,
+      billing: `${ROOTS.DASHBOARD}/account/billing`,
+      notifications: `${ROOTS.DASHBOARD}/account/notifications`,
+      socialLink: `${ROOTS.DASHBOARD}/account/social-links`,
+      security: `${ROOTS.DASHBOARD}/account/security`,
+    },
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,
     group: {

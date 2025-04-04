@@ -8,8 +8,6 @@ export default function SignUpButton({up, layoutQuery}) {
     data-slot="sign-up"
     component={RouterLink}
     variant="contained"
-    rel="noopener"
-    target="_blank"
     href={paths.studentAuth.signUp}
     sx={{
       display: 'none',

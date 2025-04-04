@@ -1,5 +1,7 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 
@@ -19,7 +21,9 @@ import { navData as mainNavData } from '../config-nav-main';
 
 export function MainLayout({ sx, data, children }) {
   const theme = useTheme();
+  const session = useSession();
 
+  const isLoggedIn = session.status === 'authenticated';
   const pathname = usePathname();
 
   const mobileNavOpen = useBoolean();
@@ -48,7 +52,10 @@ export function MainLayout({ sx, data, children }) {
               settings: false,
               helpLink: false,
               contacts: false,
-              searchbar: false
+              searchbar: false,
+              signIn: !isLoggedIn,
+              account: isLoggedIn,
+              signUp: !isLoggedIn,
             }}
             slots={{
               topArea: (

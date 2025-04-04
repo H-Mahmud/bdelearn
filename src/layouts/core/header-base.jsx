@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { paths } from 'src/routes/paths';
@@ -11,6 +10,7 @@ import { Logo } from 'src/components/logo';
 import { HeaderSection } from './header-section';
 import { Searchbar } from '../components/searchbar';
 import { MenuButton } from '../components/menu-button';
+import SignUpButton from '../components/sign-up-button';
 import { SignInButton } from '../components/sign-in-button';
 import { AccountDrawer } from '../components/account-drawer';
 import { SettingsButton } from '../components/settings-button';
@@ -58,10 +58,10 @@ export function HeaderBase({
 
   slotsDisplay: {
     signIn = true,
+    signUp = true,
     account = true,
     helpLink = true,
     settings = true,
-    purchase = true,
     contacts = false,
     searchbar = true,
     workspaces = false,
@@ -158,23 +158,9 @@ export function HeaderBase({
               {/* -- Sign in button -- */}
               {signIn && <SignInButton />}
 
-              {/* -- Purchase button -- */}
-              {purchase && (
-                <Button
-                  data-slot="purchase"
-                  variant="contained"
-                  rel="noopener"
-                  target="_blank"
-                  href={paths.minimalStore}
-                  sx={{
-                    display: 'none',
-                    [theme.breakpoints.up(layoutQuery)]: {
-                      display: 'inline-flex',
-                    },
-                  }}
-                >
-                  Purchase
-                </Button>
+              {/* -- Sign Up button -- */}
+              {signUp && (
+             <SignUpButton up={theme.breakpoints.up} layoutQuery={layoutQuery} />
               )}
             </Box>
 

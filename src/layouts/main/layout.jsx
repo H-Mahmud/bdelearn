@@ -42,14 +42,13 @@ export function MainLayout({ sx, data, children }) {
             layoutQuery={layoutQuery}
             onOpenNav={mobileNavOpen.onTrue}
             slotsDisplay={{
-              account: false,
-              helpLink: false,
-              contacts: false,
-              searchbar: false,
-              workspaces: false,
+              menuButton: true,
               localization: false,
               notifications: false,
               settings: false,
+              helpLink: false,
+              contacts: false,
+              searchbar: false
             }}
             slots={{
               topArea: (

@@ -33,7 +33,7 @@ export function Main({ children, isNavHorizontal, sx, ...other }) {
 
 // ----------------------------------------------------------------------
 
-export function DashboardContent({ sx, children, disablePadding, maxWidth = 'lg', ...other }) {
+export function DashboardContent({ sx, children, disablePadding, maxWidth = 'xl', ...other }) {
   const theme = useTheme();
 
   const settings = useSettingsContext();

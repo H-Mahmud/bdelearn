@@ -6499,14 +6499,14 @@ __metadata:
     react-apexcharts: "npm:^1.4.1"
     react-dom: "npm:19.1.0"
     react-dropzone: "npm:^14.2.3"
-    react-hook-form: "npm:^7.51.5"
+    react-hook-form: "npm:^7.55.0"
     react-i18next: "npm:^14.1.2"
     react-joyride: "npm:^2.8.2"
     react-lazy-load-image-component: "npm:1.6.0"
     react-map-gl: "npm:^7.1.7"
     react-markdown: "npm:^9.0.1"
     react-organizational-chart: "npm:^2.2.1"
-    react-phone-number-input: "npm:^3.4.3"
+    react-phone-number-input: "npm:^3.4.12"
     rehype-highlight: "npm:^7.0.0"
     rehype-raw: "npm:^7.0.0"
     remark-gfm: "npm:^4.0.0"
@@ -11616,12 +11616,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.51.5":
-  version: 7.54.2
-  resolution: "react-hook-form@npm:7.54.2"
+"react-hook-form@npm:^7.55.0":
+  version: 7.55.0
+  resolution: "react-hook-form@npm:7.55.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10c0/6eebead2900e3d369a989e7a20429f390dc75b3897142aa3107f1f6dabb9ae64fed201ea98cdcd8676e40466c97748aeb0c0d83264f5bd3a84dbc0b8e4863415
+  checksum: 10c0/9cff0da58d8223dd14e01ac83688e3546edc42cfa557974b6f2f09922ee051e4713fd53abb69c7a815bf3600142a14186b977d69d438da32f63475a8ecf6b452
   languageName: node
   linkType: hard
 
@@ -11756,7 +11756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-phone-number-input@npm:^3.4.3":
+"react-phone-number-input@npm:^3.4.12":
   version: 3.4.12
   resolution: "react-phone-number-input@npm:3.4.12"
   dependencies:

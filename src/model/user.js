@@ -102,3 +102,34 @@ export async function getUserByCredential(email, profile, password) {
     },
   });
 }
+
+
+export async function updateUserProfile(
+  id,
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  country,
+  address,
+  state,
+  city,
+  zipCode,
+  bio
+) {
+  return db.user.update({
+    where: { id },
+    data: {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      country,
+      address,
+      state,
+      city,
+      zipCode,
+      bio,
+    },
+  });
+}

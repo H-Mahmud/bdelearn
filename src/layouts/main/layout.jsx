@@ -15,7 +15,6 @@ import { HeaderBase } from '../core/header-base';
 import { LayoutSection } from '../core/layout-section';
 import { navData as mainNavData } from '../config-nav-main';
 
-
 // ----------------------------------------------------------------------
 
 export function MainLayout({ sx, data, children }) {
@@ -50,6 +49,7 @@ export function MainLayout({ sx, data, children }) {
               workspaces: false,
               localization: false,
               notifications: false,
+              settings: false,
             }}
             slots={{
               topArea: (

@@ -7,7 +7,8 @@ import { UserEditView } from 'src/sections/user/view';
 
 export const metadata = { title: `User edit | Dashboard - ${CONFIG.site.name}` };
 
-export default function Page({ params }) {
+export default async function Page(props) {
+  const params = await props.params;
   const { id } = params;
 
   const currentUser = _userList.find((user) => user.id === id);

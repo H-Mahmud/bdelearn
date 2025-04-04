@@ -5,7 +5,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3033",
+    "dev": "next dev --turbopack -p 3033",
     "start": "next start -p 3033",
     "build": "next build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -77,12 +77,12 @@
     "mapbox-gl": "^3.4.0",
     "mui-one-time-password-input": "^2.0.2",
     "nanoid": "^5.1.5",
-    "next": "^14.2.4",
+    "next": "15.2.4",
     "next-auth": "^5.0.0-beta.25",
     "nprogress": "^0.2.0",
-    "react": "^18.3.1",
+    "react": "19.1.0",
     "react-apexcharts": "^1.4.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "19.1.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.51.5",
     "react-i18next": "^14.1.2",
@@ -106,7 +106,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
-    "@types/react": "^18.3.3",
+    "@types/react": "19.1.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -122,5 +122,8 @@
     "prisma": "^6.5.0",
     "typescript": "^5.4.5"
   },
-  "packageManager": "yarn@4.8.1+sha512.bc946f2a022d7a1a38adfc15b36a66a3807a67629789496c3714dd1703d2e6c6b1c69ff9ec3b43141ac7a1dd853b7685638eb0074300386a59c18df351ef8ff6"
+  "packageManager": "yarn@4.8.1+sha512.bc946f2a022d7a1a38adfc15b36a66a3807a67629789496c3714dd1703d2e6c6b1c69ff9ec3b43141ac7a1dd853b7685638eb0074300386a59c18df351ef8ff6",
+  "resolutions": {
+    "@types/react": "19.1.0"
+  }
 }

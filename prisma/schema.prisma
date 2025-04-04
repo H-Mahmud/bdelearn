@@ -20,10 +20,15 @@ model User {
   firstName   String
   lastName    String
   password    String
+  country     String?
+  city        String?
+  state       String?
+  zipCode     String?
   address     String?
   bio         String?
   gender      Gender?
   meta        UserMeta[]
+  isVerified  Boolean    @default(false)
   profile     Profile    @default(STUDENT)
   status      Status     @default(INACTIVE)
 

@@ -106,7 +106,8 @@ export default function AccountGeneral() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await updateUserAction(data);
+     const result = await updateUserAction(data);
+     console.log(result);
       toast.success('Update success!');
     } catch (error) {
       console.error(error);
@@ -175,7 +176,7 @@ export default function AccountGeneral() {
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <Field.Text name="about" multiline rows={4} label="About" />
+              <Field.Text name="bio" multiline rows={4} label="About" />
 
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
                 Save changes

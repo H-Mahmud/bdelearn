@@ -133,3 +133,9 @@ export async function updateUserProfile(
     },
   });
 }
+
+export async function getUserById(id) {
+  return db.user.findUnique({
+    where: { id },
+  });
+}

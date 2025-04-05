@@ -2,8 +2,8 @@
 
 import { z as zod } from 'zod';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -18,12 +18,15 @@ import { fData } from 'src/utils/format-number';
 import { toast } from 'src/components/snackbar';
 import { Form, Field, schemaHelper } from 'src/components/hook-form';
 
-import { useMockedUser } from 'src/auth/hooks';
+import getUserData from './get-user-data';
+import updateUserAction from './update-user-action';
+
 
 // ----------------------------------------------------------------------
 
 export const UpdateUserSchema = zod.object({
-  displayName: zod.string().min(1, { message: 'Name is required!' }),
+  firstName: zod.string().min(1, { message: 'First Name is required!' }),
+  lastName: zod.string().min(1, { message: 'Last Name is required!' }),
   email: zod
     .string()
     .min(1, { message: 'Email is required!' })
@@ -31,7 +34,6 @@ export const UpdateUserSchema = zod.object({
   photoURL: schemaHelper.file({
     message: { required_error: 'Avatar is required!' },
   }),
-  phoneNumber: schemaHelper.phoneNumber({ isValidPhoneNumber }),
   country: schemaHelper.objectOrNull({
     message: { required_error: 'Country is required!' },
   }),
@@ -39,26 +41,38 @@ export const UpdateUserSchema = zod.object({
   state: zod.string().min(1, { message: 'State is required!' }),
   city: zod.string().min(1, { message: 'City is required!' }),
   zipCode: zod.string().min(1, { message: 'Zip code is required!' }),
-  about: zod.string().min(1, { message: 'About is required!' }),
-  // Not required
-  isPublic: zod.boolean(),
+  bio: zod.string().min(1, { message: 'About is required!' }),
 });
 
 export default function AccountGeneral() {
-  const { user } = useMockedUser();
+  /**
+   * @type {import('@prisma/client').User[]}
+   */
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+   ( async() => {
+    const data = await getUserData();
+    if (data) {
+      setUser(data);
+    } 
+    })()
+  }, [])
+
+
 
   const defaultValues = {
-    displayName: user?.displayName || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
     email: user?.email || '',
     photoURL: user?.photoURL || null,
-    phoneNumber: user?.phoneNumber || '',
     country: user?.country || '',
     address: user?.address || '',
     state: user?.state || '',
     city: user?.city || '',
     zipCode: user?.zipCode || '',
-    about: user?.about || '',
-    isPublic: user?.isPublic || false,
+    bio: user?.bio || '',
   };
 
   const methods = useForm({
@@ -72,11 +86,28 @@ export default function AccountGeneral() {
     formState: { isSubmitting },
   } = methods;
 
+
+  useEffect(() => {
+    if (user) {
+      methods.reset({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.email || '',
+        photoURL: user.photoURL || null,
+        country: user.country || '',
+        address: user.address || '',
+        state: user.state || '',
+        city: user.city || '',
+        zipCode: user.zipCode || '',
+        bio: user.bio || '',
+      });
+    }
+  }, [user, methods]);
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await updateUserAction(data);
       toast.success('Update success!');
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
@@ -114,13 +145,6 @@ export default function AccountGeneral() {
               }
             />
 
-            <Field.Switch
-              name="isPublic"
-              labelPlacement="start"
-              label="Public profile"
-              sx={{ mt: 5 }}
-            />
-
             <Button variant="soft" color="error" sx={{ mt: 3 }}>
               Delete user
             </Button>
@@ -138,9 +162,9 @@ export default function AccountGeneral() {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <Field.Text name="displayName" label="Name" />
+              <Field.Text name="firstName" label="First Name" />
+              <Field.Text name="lastName" label="Last Name" />
               <Field.Text name="email" label="Email address" />
-              <Field.Phone name="phoneNumber" label="Phone number" />
               <Field.Text name="address" label="Address" />
 
               <Field.CountrySelect name="country" label="Country" placeholder="Choose a country" />

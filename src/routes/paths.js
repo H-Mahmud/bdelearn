@@ -17,13 +17,26 @@ const ROOTS = {
 // ----------------------------------------------------------------------
 
 export const paths = {
+  auth: {
+    adminSignIn: "/admin/admin-sign-in",
+    subAdmin: {
+      signIn: '/sub-admin/sign-in',
+      signUp: '/sub-admin/sign-up',
+      forgotPassword: '/sub-admin/forgot-password',
+    },
+
+    resetPassword: '/reset-password',
+    verify: '/verify',
+  },
+
+  adminLogin: "",
   studentAuth: {
     signIn: '/sign-in',
     signUp: '/sign-up',
-    verify: '/verify',
     forgotPassword: '/forgot-password',
     resetPassword: '/reset-password',
   },
+  
 
   comingSoon: '/coming-soon',
   maintenance: '/maintenance',
@@ -55,35 +68,35 @@ export const paths = {
     demo: { details: `/post/${paramCase(MOCK_TITLE)}` },
   },
   // AUTH
-  auth: {
-    amplify: {
-      signIn: `${ROOTS.AUTH}/amplify/sign-in`,
-      verify: `${ROOTS.AUTH}/amplify/verify`,
-      signUp: `${ROOTS.AUTH}/amplify/sign-up`,
-      updatePassword: `${ROOTS.AUTH}/amplify/update-password`,
-      resetPassword: `${ROOTS.AUTH}/amplify/reset-password`,
-    },
-    jwt: {
-      signIn: `${ROOTS.AUTH}/jwt/sign-in`,
-      signUp: `${ROOTS.AUTH}/jwt/sign-up`,
-    },
-    firebase: {
-      signIn: `${ROOTS.AUTH}/firebase/sign-in`,
-      verify: `${ROOTS.AUTH}/firebase/verify`,
-      signUp: `${ROOTS.AUTH}/firebase/sign-up`,
-      resetPassword: `${ROOTS.AUTH}/firebase/reset-password`,
-    },
-    auth0: {
-      signIn: `${ROOTS.AUTH}/auth0/sign-in`,
-    },
-    supabase: {
-      signIn: `${ROOTS.AUTH}/supabase/sign-in`,
-      verify: `${ROOTS.AUTH}/supabase/verify`,
-      signUp: `${ROOTS.AUTH}/supabase/sign-up`,
-      updatePassword: `${ROOTS.AUTH}/supabase/update-password`,
-      resetPassword: `${ROOTS.AUTH}/supabase/reset-password`,
-    },
-  },
+  // auth: {
+  //   amplify: {
+  //     signIn: `${ROOTS.AUTH}/amplify/sign-in`,
+  //     verify: `${ROOTS.AUTH}/amplify/verify`,
+  //     signUp: `${ROOTS.AUTH}/amplify/sign-up`,
+  //     updatePassword: `${ROOTS.AUTH}/amplify/update-password`,
+  //     resetPassword: `${ROOTS.AUTH}/amplify/reset-password`,
+  //   },
+  //   jwt: {
+  //     signIn: `${ROOTS.AUTH}/jwt/sign-in`,
+  //     signUp: `${ROOTS.AUTH}/jwt/sign-up`,
+  //   },
+  //   firebase: {
+  //     signIn: `${ROOTS.AUTH}/firebase/sign-in`,
+  //     verify: `${ROOTS.AUTH}/firebase/verify`,
+  //     signUp: `${ROOTS.AUTH}/firebase/sign-up`,
+  //     resetPassword: `${ROOTS.AUTH}/firebase/reset-password`,
+  //   },
+  //   auth0: {
+  //     signIn: `${ROOTS.AUTH}/auth0/sign-in`,
+  //   },
+  //   supabase: {
+  //     signIn: `${ROOTS.AUTH}/supabase/sign-in`,
+  //     verify: `${ROOTS.AUTH}/supabase/verify`,
+  //     signUp: `${ROOTS.AUTH}/supabase/sign-up`,
+  //     updatePassword: `${ROOTS.AUTH}/supabase/update-password`,
+  //     resetPassword: `${ROOTS.AUTH}/supabase/reset-password`,
+  //   },
+  // },
   
   authDemo: {
     split: {

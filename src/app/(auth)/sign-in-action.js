@@ -1,5 +1,10 @@
 'use server';
 
+
+import { redirect } from 'next/navigation';
+
+import { paths } from 'src/routes/paths';
+
 import { saltAndHashPassword } from 'src/utils/hash';
 
 import { signIn } from 'src/auth';
@@ -31,9 +36,10 @@ export default async function userSignIn(formData) {
       redirect: false,
       callbackUrl: '/',
     });
-    return { success: true, redirectUrl: '/dashboard' };
   } catch (e) {
     console.log(e);
     return { field: 'root', error: 'Sign In failed, Unknown server error.' };
   }
+
+  return redirect(paths.dashboard.root);
 }

@@ -45,9 +45,7 @@ export default function SignInForm() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const result = await userSignIn(data);
-      if (result?.success) {
-        router.push(result.redirectUrl);
-      } else if (result?.field && result?.error) {
+      if (result?.field && result?.error) {
         setError(result.field, { type: 'server', message: result.error });
       }
     } catch (error) {

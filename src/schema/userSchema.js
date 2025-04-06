@@ -66,3 +66,14 @@ export const SignInSchema = zod.object({
     .min(1, { message: 'Password is required!' })
     .min(6, { message: 'Password must be at least 6 characters!' }),
 });
+
+
+export const ForgotPasswordSchema = zod.object({
+  profile: zod.enum(PROFILES, {
+    errorMap: () => ({ message: 'Please select a valid profile from the available options.' }),
+  }),
+  email: zod
+    .string()
+    .min(1, { message: 'Email is required!' })
+    .email({ message: 'Email must be a valid email address!' }),
+});

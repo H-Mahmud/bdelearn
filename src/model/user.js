@@ -41,6 +41,39 @@ export async function createUser(
 }
 
 /**
+ *
+ * @param {string} firstName
+ * @param {string} lastName
+ * @param {string} email
+ * @param {string} phoneNumber
+ * @param {string} password
+ * @param {import('@prisma/client').Status} status
+ * @param {import('@prisma/client').Profile} profile
+ */
+export async function createSubAdminUser(
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  password,
+  status,
+  profile
+) {
+  return db.user.create({
+    data: {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+      status,
+      profile,
+    },
+  });
+}
+
+
+/**
  * Get user id by user referral code
  *
  * @param {string} referralCode

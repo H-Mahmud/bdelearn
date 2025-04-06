@@ -2,7 +2,7 @@ import { z as zod } from 'zod';
 /**
  * @type {import('@prisma/client').Profile[]}
  */
-const validProfile = ['SUPER_ADMIN', 'ADMIN', 'CONTROLLER', 'COUNSELOR', 'STUDENT', 'TRAINER'];
+export const PROFILES = ['SUPER_ADMIN', 'ADMIN', 'CONTROLLER', 'COUNSELOR', 'STUDENT', 'TRAINER'];
 
 export const SignUpSchema = zod.object({
   firstName: zod.string().min(1, { message: 'First name is required!' }),
@@ -19,8 +19,8 @@ export const SignUpSchema = zod.object({
     .regex(/^\+?[0-9]+$/, {
       message: "Whatsapp number must contain only numbers and an optional '+' at the start",
     }),
-  profile: zod.enum(validProfile, {
-    errorMap: () => ({ message: 'Invalid profile' }),
+  profile: zod.enum(PROFILES, {
+    errorMap: () => ({ message: 'Please select a valid profile from the available options.' }),
   }),
   password: zod
     .string()
@@ -39,8 +39,8 @@ export const SignInSchema = zod.object({
     .string()
     .min(1, { message: 'Email is required!' })
     .email({ message: 'Email must be a valid email address!' }),
-  profile: zod.enum(validProfile, {
-    errorMap: () => ({ message: 'Invalid profile' }),
+  profile: zod.enum(PROFILES, {
+    errorMap: () => ({ message: 'Please select a valid profile from the available options.' }),
   }),
   password: zod
     .string()

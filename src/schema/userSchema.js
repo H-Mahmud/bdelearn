@@ -2,9 +2,15 @@ import { z as zod } from 'zod';
 /**
  * @type {import('@prisma/client').Profile[]}
  */
-export const PROFILES = ['SUPER_ADMIN', 'ADMIN', 'CONTROLLER', 'COUNSELOR', 'STUDENT', 'TRAINER'];
+export const PROFILES = ['ADMIN', 'CONTROLLER', 'COUNSELOR', 'STUDENT', 'TRAINER'];
+/**
+ * @type {import('@prisma/client').Profile}
+ */
+export const SUPER_ADMIN_PROFILE = 'SUPER_ADMIN';
+export const SUB_ADMIN_PROFILES = PROFILES.filter((profile) => profile !== 'STUDENT');
 
-export const SignUpSchema = zod.object({
+
+const GeneralSignUpFields = {
   firstName: zod.string().min(1, { message: 'First name is required!' }),
   lastName: zod.string().min(1, { message: 'Last name is required!' }),
   email: zod
@@ -19,20 +25,33 @@ export const SignUpSchema = zod.object({
     .regex(/^\+?[0-9]+$/, {
       message: "Whatsapp number must contain only numbers and an optional '+' at the start",
     }),
-  profile: zod.enum(PROFILES, {
-    errorMap: () => ({ message: 'Please select a valid profile from the available options.' }),
-  }),
   password: zod
     .string()
     .min(1, { message: 'Password is required!' })
     .min(6, { message: 'Password must be at least 6 characters!' }),
+
+}
+
+export const SignUpSchema = zod.object({
+  ...GeneralSignUpFields,
+  profile: zod.enum(PROFILES, {
+    errorMap: () => ({ message: 'Please select a valid profile from the available options.' }),
+  }),
   referralCode: zod
-    .string()
-    .min(1, { message: 'Referral Code is required!' })
-    .regex(/^\d{8}$/, {
-      message: 'Referral code must be exactly 8 digits and contain only numbers',
-    }),
+  .string()
+  .min(1, { message: 'Referral Code is required!' })
+  .regex(/^\d{8}$/, {
+    message: 'Referral code must be exactly 8 digits and contain only numbers',
+  }),
 });
+
+
+export const subAdminSignUpSchema = zod.object({
+  ...GeneralSignUpFields,
+  profile: zod.enum(SUB_ADMIN_PROFILES, {
+    errorMap: () => ({ message: 'Please select a valid profile from the available options.' }),
+  }),
+})
 
 export const SignInSchema = zod.object({
   email: zod

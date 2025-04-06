@@ -16,7 +16,7 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { PROFILES, SignInSchema } from 'src/schema/userSchema';
+import { SignInSchema, SUB_ADMIN_PROFILES } from 'src/schema/userSchema';
 
 import { Iconify } from 'src/components/iconify';
 import { AnimateLogo2 } from 'src/components/animate';
@@ -73,8 +73,8 @@ export function SubAdminSignInForm() {
 
   const renderForm = (
     <Stack spacing={3}>
-        <Field.Select name="profile" label="Profile" helperText={methods.formState.errors.profile?.message}>
-          {PROFILES.map(profile => (<MenuItem key={profile} value={profile}>{profile}</MenuItem>))}
+        <Field.Select name="profile" label="Select Profile" helperText={methods.formState.errors.profile?.message} InputLabelProps={{ shrink: true }}>
+          {SUB_ADMIN_PROFILES.map(profile => (<MenuItem key={profile} value={profile} sx={{textTransform: 'capitalize'}}>{profile.toLowerCase()}</MenuItem>))}
         </Field.Select>
 
       <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} helperText={methods.formState.errors.email?.message} />

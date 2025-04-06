@@ -21,7 +21,7 @@ import { SignInSchema } from 'src/schema/userSchema';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
-import userSignIn from './sign-in-action';
+import userSignIn from '../sign-in-action';
 
 // ----------------------------------------------------------------------
 

@@ -22,6 +22,8 @@ import { Iconify } from 'src/components/iconify';
 import { AnimateLogo2 } from 'src/components/animate';
 import { Form, Field } from 'src/components/hook-form';
 
+import userSignIn from '../../sign-in-action';
+
 // ----------------------------------------------------------------------
 
 export function SubAdminSignInForm() {
@@ -37,12 +39,15 @@ export function SubAdminSignInForm() {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    setError
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      console.info('DATA', data);
+     const result = await userSignIn(data);
+      if(result.field && result.error) {
+        setError(result.field, {type: 'server', message: result.error});
+      }
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +73,11 @@ export function SubAdminSignInForm() {
 
   const renderForm = (
     <Stack spacing={3}>
-      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+        <Field.Select name="profile" label="Profile" helperText={methods.formState.errors.profile?.message}>
+          {PROFILES.map(profile => (<MenuItem key={profile} value={profile}>{profile}</MenuItem>))}
+        </Field.Select>
+
+      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} helperText={methods.formState.errors.email?.message} />
 
       <Stack spacing={1.5}>
         <Link
@@ -81,14 +90,11 @@ export function SubAdminSignInForm() {
           Forgot password?
         </Link>
 
-        <Field.Select name="profile" label="Profile">
-          {PROFILES.map(profile => (<MenuItem key={profile} value={profile}>{profile}</MenuItem>))}
-        </Field.Select>
-
         <Field.Text
           name="password"
           label="Password"
           placeholder="6+ characters"
+          helperText={methods.formState.errors.password?.message}
           type={password.value ? 'text' : 'password'}
           InputLabelProps={{ shrink: true }}
           InputProps={{
@@ -103,6 +109,12 @@ export function SubAdminSignInForm() {
         />
       </Stack>
 
+      {methods.formState.errors.root?.message && (
+        <Typography variant="body2" color="error.main">
+          {methods.formState.errors.root?.message}
+        </Typography>
+      )}
+      
       <LoadingButton
         fullWidth
         color="inherit"

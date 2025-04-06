@@ -1,0 +1,132 @@
+'use client';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
+import { MenuItem } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
+import InputAdornment from '@mui/material/InputAdornment';
+
+import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
+
+import { useBoolean } from 'src/hooks/use-boolean';
+
+import { PROFILES, SignInSchema } from 'src/schema/userSchema';
+
+import { Iconify } from 'src/components/iconify';
+import { AnimateLogo2 } from 'src/components/animate';
+import { Form, Field } from 'src/components/hook-form';
+
+// ----------------------------------------------------------------------
+
+export function SubAdminSignInForm() {
+  const password = useBoolean();
+
+  const defaultValues = { email: '', password: '', profile: '' };
+
+  const methods = useForm({
+    resolver: zodResolver(SignInSchema),
+    defaultValues,
+  });
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      console.info('DATA', data);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  const renderLogo = <AnimateLogo2 sx={{ mb: 3, mx: 'auto' }} />;
+
+  const renderHead = (
+    <Stack alignItems="center" spacing={1.5} sx={{ mb: 5 }}>
+      <Typography variant="h5">Sign in to your account</Typography>
+
+      <Stack direction="row" spacing={0.5}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {`Don't have an account?`}
+        </Typography>
+
+        <Link component={RouterLink} href={paths.auth.subAdmin.signUp} variant="subtitle2">
+          Get started
+        </Link>
+      </Stack>
+    </Stack>
+  );
+
+  const renderForm = (
+    <Stack spacing={3}>
+      <Field.Text name="email" label="Email address" InputLabelProps={{ shrink: true }} />
+
+      <Stack spacing={1.5}>
+        <Link
+          component={RouterLink}
+          href={paths.auth.subAdmin.forgotPassword}
+          variant="body2"
+          color="inherit"
+          sx={{ alignSelf: 'flex-end' }}
+        >
+          Forgot password?
+        </Link>
+
+        <Field.Select name="profile" label="Profile">
+          {PROFILES.map(profile => (<MenuItem key={profile} value={profile}>{profile}</MenuItem>))}
+        </Field.Select>
+
+        <Field.Text
+          name="password"
+          label="Password"
+          placeholder="6+ characters"
+          type={password.value ? 'text' : 'password'}
+          InputLabelProps={{ shrink: true }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={password.onToggle} edge="end">
+                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Stack>
+
+      <LoadingButton
+        fullWidth
+        color="inherit"
+        size="large"
+        type="submit"
+        variant="contained"
+        loading={isSubmitting}
+        loadingIndicator="Sign in..."
+      >
+        Sign in
+      </LoadingButton>
+    </Stack>
+  );
+
+  return (
+    <>
+      {renderLogo}
+
+      {renderHead}
+
+      <Form methods={methods} onSubmit={onSubmit}>
+        {renderForm}
+      </Form>
+
+    </>
+  );
+}

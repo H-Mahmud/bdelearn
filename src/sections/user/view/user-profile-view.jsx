@@ -48,7 +48,7 @@ export function UserProfileView({data}) {
 
   return (
     <DashboardContent>
-      <Toaster/>
+      <Toaster position='top-right' richColors />
 
       <Card sx={{ mb: 3, height: 290 }}>
         <ProfileCover

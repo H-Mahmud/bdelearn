@@ -41,7 +41,7 @@ export function ProfileHome({ info, posts, user }) {
      <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
      {user.referralCode}  
       <ButtonBase onClick={() => {navigator.clipboard.writeText(user.referralCode); toast.success('Student ID copied to clipboard successfully!')}}>
-      <Iconify icon="mingcute:copy-fill"  />
+      <Iconify icon="solar:copy-bold"  />
       </ButtonBase>
      </Stack>
       <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>

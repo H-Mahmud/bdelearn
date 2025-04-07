@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -14,7 +14,6 @@ import { paths } from 'src/routes/paths';
 import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { varAlpha } from 'src/theme/styles';
-import { fetchUserData } from 'src/server-actions/user';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
@@ -26,7 +25,7 @@ import { SignOutButton } from './sign-out-button';
 
 // ----------------------------------------------------------------------
 
-export function AccountDrawer({ data = [], sx, ...other }) {
+export function AccountDrawer({ data, sx, ...other }) {
   const theme = useTheme();
 
   const router = useRouter();
@@ -54,16 +53,8 @@ export function AccountDrawer({ data = [], sx, ...other }) {
   /**
    * @type {[import('@prisma/client').User | null]}
    */
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    async function loadUserData() {
-      const userData = await fetchUserData();
-      setUser(userData);
-    }
-
-    loadUserData();
-  }, []);
+  console.log('data: ', data);
+  const {nav, user} = data;
   if (!user) return null;
 
   const displayName = user.firstName + user.lastName;
@@ -130,7 +121,7 @@ export function AccountDrawer({ data = [], sx, ...other }) {
               borderBottom: `dashed 1px ${theme.vars.palette.divider}`,
             }}
           >
-            {data.map((option) => {
+            {nav.map((option) => {
               const rootLabel = pathname.includes('/dashboard') ? 'Home' : 'Dashboard';
 
               const rootHref = pathname.includes('/dashboard') ? '/' : paths.dashboard.root;

@@ -20,7 +20,6 @@ import { layoutClasses } from '../classes';
 import { NavVertical } from './nav-vertical';
 import { NavHorizontal } from './nav-horizontal';
 import { HeaderBase } from '../core/header-base';
-import { _accountNav } from './config-nav-account';
 import { _workspaces } from '../config-nav-workspace';
 import { LayoutSection } from '../core/layout-section';
 import { navData as dashboardNavData } from '../config-nav-dashboard';
@@ -45,6 +44,8 @@ export function DashboardLayout({ sx, children, data }) {
   const isNavHorizontal = settings.navLayout === 'horizontal';
 
   const isNavVertical = isNavMini || settings.navLayout === 'vertical';
+
+  const {account} = data;
 
   return (
     <>
@@ -73,7 +74,7 @@ export function DashboardLayout({ sx, children, data }) {
                 { value: 'cn', label: 'Chinese', countryCode: 'CN' },
                 { value: 'ar', label: 'Arabic', countryCode: 'SA' },
               ],
-              account: _accountNav,
+              account,
               contacts: _contacts,
               workspaces: _workspaces,
               notifications: _notifications,

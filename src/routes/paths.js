@@ -17,6 +17,7 @@ const ROOTS = {
 // ----------------------------------------------------------------------
 
 export const paths = {
+  home: '/',
   auth: {
     adminSignIn: "/admin/admin-sign-in",
     subAdmin: {

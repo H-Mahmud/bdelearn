@@ -72,7 +72,6 @@ export async function createSubAdminUser(
   });
 }
 
-
 /**
  * Get user id by user referral code
  *
@@ -136,7 +135,6 @@ export async function getUserByCredential(email, profile, password) {
   });
 }
 
-
 export async function updateUserProfile(
   id,
   firstName,
@@ -170,5 +168,16 @@ export async function updateUserProfile(
 export async function getUserById(id) {
   return db.user.findUnique({
     where: { id },
+  });
+}
+
+export async function isUserEmailVerified(id) {
+  return db.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      isVerified: true,
+    },
   });
 }

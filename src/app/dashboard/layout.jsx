@@ -10,15 +10,17 @@ import { accountNav } from './config-nav-account';
 
 export default async function Layout({ children }) {
 
+  let data;
   const session = await auth()
 
-  const user = await getUserById(session.user.id)
-
-  const data = {
+  if(session) {
+    const user = await getUserById(session.user.id)
+   data = {
     account: {
       nav: accountNav,
       user
     }
+  }
   }
 
   return (

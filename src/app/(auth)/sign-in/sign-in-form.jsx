@@ -62,7 +62,7 @@ export default function SignInForm() {
           {`Don't have an account?`}
         </Typography>
 
-        <Link component={RouterLink} href={paths.studentAuth.signUp} variant="subtitle2">
+        <Link component={RouterLink} href={paths.auth.student.signUp} variant="subtitle2">
           Get started
         </Link>
       </Stack>
@@ -81,7 +81,7 @@ export default function SignInForm() {
       <Stack spacing={1.5}>
         <Link
           component={RouterLink}
-          href={paths.studentAuth.forgotPassword}
+          href={paths.auth.student.forgotPassword}
           variant="body2"
           color="inherit"
           sx={{ alignSelf: 'flex-end' }}

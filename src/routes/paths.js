@@ -20,24 +20,22 @@ export const paths = {
   home: '/',
   auth: {
     adminSignIn: "/admin/admin-sign-in",
+    
     subAdmin: {
       signIn: '/sub-admin/sign-in',
       signUp: '/sub-admin/sign-up',
       forgotPassword: '/sub-admin/forgot-password',
     },
 
+    student: {
+      signIn: '/sign-in',
+      signUp: '/sign-up',
+      forgotPassword: '/forgot-password',
+    },
+
     resetPassword: '/reset-password',
     verify: '/verify',
   },
-
-  adminLogin: "",
-  studentAuth: {
-    signIn: '/sign-in',
-    signUp: '/sign-up',
-    forgotPassword: '/forgot-password',
-    resetPassword: '/reset-password',
-  },
-  
 
   comingSoon: '/coming-soon',
   maintenance: '/maintenance',

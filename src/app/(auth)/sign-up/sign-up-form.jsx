@@ -68,7 +68,7 @@ export default function SignUpForm() {
           Already have an account?
         </Typography>
 
-        <Link component={RouterLink} href={paths.studentAuth.signIn} variant="subtitle2">
+        <Link component={RouterLink} href={paths.auth.student.signIn} variant="subtitle2">
           Sign in
         </Link>
       </Stack>

@@ -53,7 +53,6 @@ export function AccountDrawer({ data, sx, ...other }) {
   /**
    * @type {[import('@prisma/client').User | null]}
    */
-  console.log('data: ', data);
   const {nav, user} = data;
   if (!user) return null;
 

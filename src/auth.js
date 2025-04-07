@@ -41,3 +41,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
+
+export async function getUserId() {
+  const session = await auth();
+  if (!session.user) {
+    throw new Error('User not found');
+  }
+
+  return session.user.id;
+}

@@ -7,17 +7,12 @@ import Tab from '@mui/material/Tab';
 import Card from '@mui/material/Card';
 import Tabs from '@mui/material/Tabs';
 
-import { paths } from 'src/routes/paths';
-
 import { useTabs } from 'src/hooks/use-tabs';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from 'src/_mock';
 
 import { Iconify } from 'src/components/iconify';
-import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-
-import { useMockedUser } from 'src/auth/hooks';
 
 import { ProfileHome } from '../profile-home';
 import { ProfileCover } from '../profile-cover';
@@ -44,8 +39,8 @@ const TABS = [
 
 // ----------------------------------------------------------------------
 
-export function UserProfileView() {
-  const { user } = useMockedUser();
+export function UserProfileView({data}) {
+  const { user } = data;
 
   const [searchFriends, setSearchFriends] = useState('');
 
@@ -57,20 +52,10 @@ export function UserProfileView() {
 
   return (
     <DashboardContent>
-      <CustomBreadcrumbs
-        heading="Profile"
-        links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'User', href: paths.dashboard.user.root },
-          { name: user?.displayName },
-        ]}
-        sx={{ mb: { xs: 3, md: 5 } }}
-      />
-
       <Card sx={{ mb: 3, height: 290 }}>
         <ProfileCover
           role={_userAbout.role}
-          name={user?.displayName}
+          name={user?.firstName}
           avatarUrl={user?.photoURL}
           coverUrl={_userAbout.coverUrl}
         />

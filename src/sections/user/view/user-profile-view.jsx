@@ -1,24 +1,20 @@
 'use client';
 
+import { Toaster } from 'sonner';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
 import Card from '@mui/material/Card';
-import Tabs from '@mui/material/Tabs';
 
 import { useTabs } from 'src/hooks/use-tabs';
 
+import { _userAbout, _userFeeds } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
-import { _userAbout, _userFeeds, _userFriends, _userGallery, _userFollowers } from 'src/_mock';
 
 import { Iconify } from 'src/components/iconify';
 
 import { ProfileHome } from '../profile-home';
 import { ProfileCover } from '../profile-cover';
-import { ProfileFriends } from '../profile-friends';
-import { ProfileGallery } from '../profile-gallery';
-import { ProfileFollowers } from '../profile-followers';
 
 // ----------------------------------------------------------------------
 
@@ -52,10 +48,12 @@ export function UserProfileView({data}) {
 
   return (
     <DashboardContent>
+      <Toaster/>
+
       <Card sx={{ mb: 3, height: 290 }}>
         <ProfileCover
-          role={_userAbout.role}
-          name={user?.firstName}
+          role={user.profile}
+          name={`${user.firstName} ${user.lastName}`}
           avatarUrl={user?.photoURL}
           coverUrl={_userAbout.coverUrl}
         />
@@ -72,17 +70,13 @@ export function UserProfileView({data}) {
             bgcolor: 'background.paper',
           }}
         >
-          <Tabs value={tabs.value} onChange={tabs.onChange}>
-            {TABS.map((tab) => (
-              <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
-            ))}
-          </Tabs>
+          {/* <Stack py={1} direction="row" alignItems="center" justifyContent="flex-start" spacing={2} variant='body2'>STUDENT ID: <Typography variant='h6'>{user.referralCode}</Typography></Stack> */}
         </Box>
       </Card>
 
-      {tabs.value === 'profile' && <ProfileHome info={_userAbout} posts={_userFeeds} />}
+      <ProfileHome info={_userAbout} posts={_userFeeds} user={user} />
 
-      {tabs.value === 'followers' && <ProfileFollowers followers={_userFollowers} />}
+      {/* {tabs.value === 'followers' && <ProfileFollowers followers={_userFollowers} />}
 
       {tabs.value === 'friends' && (
         <ProfileFriends
@@ -92,7 +86,7 @@ export function UserProfileView({data}) {
         />
       )}
 
-      {tabs.value === 'gallery' && <ProfileGallery gallery={_userGallery} />}
+      {tabs.value === 'gallery' && <ProfileGallery gallery={_userGallery} />} */}
     </DashboardContent>
   );
 }

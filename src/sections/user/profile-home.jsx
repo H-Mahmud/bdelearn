@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import { toast } from 'sonner';
 
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
@@ -12,19 +13,16 @@ import Divider from '@mui/material/Divider';
 import InputBase from '@mui/material/InputBase';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
-
-import { fNumber } from 'src/utils/format-number';
+import { Table, TableRow, TableBody, TableCell, Typography, ButtonBase } from '@mui/material';
 
 import { _socials } from 'src/_mock';
 import { varAlpha } from 'src/theme/styles';
 
 import { Iconify, SocialIcon } from 'src/components/iconify';
 
-import { ProfilePostItem } from './profile-post-item';
-
 // ----------------------------------------------------------------------
 
-export function ProfileHome({ info, posts }) {
+export function ProfileHome({ info, posts, user }) {
   const fileRef = useRef(null);
 
   const handleAttach = () => {
@@ -33,6 +31,29 @@ export function ProfileHome({ info, posts }) {
     }
   };
 
+  const renderStudentId = (
+<Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
+  <Stack
+    direction="row"
+    divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+  >
+    <Stack width={1}>
+     <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+     {user.referralCode}  
+      <ButtonBase onClick={() => {navigator.clipboard.writeText(user.referralCode); toast.success('Student ID copied to clipboard successfully!')}}>
+      <Iconify icon="mingcute:copy-fill"  />
+      </ButtonBase>
+     </Stack>
+      <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+        Student ID
+      </Box>
+    </Stack>
+  
+  </Stack>
+</Card>
+
+  );
+
   const renderFollows = (
     <Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
       <Stack
@@ -40,16 +61,16 @@ export function ProfileHome({ info, posts }) {
         divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
       >
         <Stack width={1}>
-          {fNumber(info.totalFollowers)}
+          {user.status}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            Follower
+            Status
           </Box>
         </Stack>
 
         <Stack width={1}>
-          {fNumber(info.totalFollowing)}
+          {user.balance ?? 0}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            Following
+            Balance
           </Box>
         </Stack>
       </Stack>
@@ -61,7 +82,7 @@ export function ProfileHome({ info, posts }) {
       <CardHeader title="About" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Box sx={{ typography: 'body2' }}>{info.quote}</Box>
+        <Box sx={{ typography: 'body2' }}>{user.bio}</Box>
 
         <Stack direction="row" spacing={2}>
           <Iconify icon="mingcute:location-fill" width={24} />
@@ -69,36 +90,23 @@ export function ProfileHome({ info, posts }) {
           <Box sx={{ typography: 'body2' }}>
             {`Live at `}
             <Link variant="subtitle2" color="inherit">
-              {info.country}
+              {user.country}
             </Link>
           </Box>
         </Stack>
 
         <Stack direction="row" sx={{ typography: 'body2' }}>
           <Iconify icon="fluent:mail-24-filled" width={24} sx={{ mr: 2 }} />
-          {info.email}
+          <Link href={`mailto:${user.email}`} variant="subtitle2" color="inherit">
+            {user.email}
+          </Link>
         </Stack>
 
         <Stack direction="row" spacing={2}>
-          <Iconify icon="ic:round-business-center" width={24} />
-
-          <Box sx={{ typography: 'body2' }}>
-            {info.role} {`at `}
-            <Link variant="subtitle2" color="inherit">
-              {info.company}
-            </Link>
-          </Box>
-        </Stack>
-
-        <Stack direction="row" spacing={2}>
-          <Iconify icon="ic:round-business-center" width={24} />
-
-          <Box sx={{ typography: 'body2' }}>
-            {`Studied at `}
-            <Link variant="subtitle2" color="inherit">
-              {info.school}
-            </Link>
-          </Box>
+          <Iconify icon="mingcute:phone-fill" width={24} />
+          <Link href={`tel:${user.phoneNumber}`} variant="subtitle2" color="inherit">
+            {user.phoneNumber}
+          </Link>
         </Stack>
       </Stack>
     </Card>
@@ -164,25 +172,93 @@ export function ProfileHome({ info, posts }) {
     </Card>
   );
 
+  const renderShare = (
+    <Card>
+      <CardHeader title="Share your referral" />
+    </Card>
+  );
+
+  const renderUserDetails = (
+    <Card>
+      <CardHeader title="Personal Information" />
+      <Stack sx={{ p: 1 }}>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body2">First Name</Typography>
+                <Typography variant="h6">{user.firstName}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">Last Name</Typography>
+                <Typography variant="h6">{user.lastName}</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body2">Email</Typography>
+                <Typography variant="h6">{user.email}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">Phone Number</Typography>
+                <Typography variant="h6">{user.phoneNumber}</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body2">Country</Typography>
+                <Typography variant="h6">{user.country}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">City</Typography>
+                <Typography variant="h6">{user.city}</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body2">State</Typography>
+                <Typography variant="h6">{user.state}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">Zip Code</Typography>
+                <Typography variant="h6">{user.zipCode}</Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body2">Address</Typography>
+                <Typography variant="h6">{user.address}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body2">Gender</Typography>
+                <Typography variant="h6">{user.gender}</Typography>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Stack>
+    </Card>
+  );
+
   return (
     <Grid container spacing={3}>
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
+          {user.profile === 'STUDENT'? renderStudentId: null}
+
           {renderFollows}
 
           {renderAbout}
 
-          {renderSocials}
+          {/* {renderSocials} */}
         </Stack>
       </Grid>
 
       <Grid xs={12} md={8}>
         <Stack spacing={3}>
-          {renderPostInput}
+          {renderShare}
 
-          {posts.map((post) => (
-            <ProfilePostItem key={post.id} post={post} />
-          ))}
+          {renderUserDetails}
         </Stack>
       </Grid>
     </Grid>

@@ -6487,6 +6487,7 @@ __metadata:
     i18next: "npm:^23.11.5"
     i18next-browser-languagedetector: "npm:^8.0.4"
     i18next-resources-to-backend: "npm:^1.2.1"
+    lodash: "npm:^4.17.21"
     mapbox-gl: "npm:^3.4.0"
     mui-one-time-password-input: "npm:^2.0.2"
     nanoid: "npm:^5.1.5"

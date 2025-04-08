@@ -46,7 +46,7 @@ const NAV_ITEMS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountTabs() {
+export default function AccountTabs({data}) {
   const pathname = usePathname();
   const activePath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
   const route = useRouter();
@@ -55,7 +55,7 @@ export default function AccountTabs() {
   console.log('tab value', tabs.value);
   const activeTab = NAV_ITEMS.find((item) => item.href === activePath)?.label || 'General';
 
-
+const {user} = data;
   return (
     <>
       <CustomBreadcrumbs
@@ -82,7 +82,7 @@ export default function AccountTabs() {
         ))}
       </Tabs>
 
-      {tabs.value === paths.dashboard.account.root && <AccountGeneral />}
+      {tabs.value === paths.dashboard.account.root && <AccountGeneral user={user} />}
       {tabs.value === paths.dashboard.account.security && <AccountSecurity />}
       </>
   );

@@ -1,11 +1,18 @@
+import _ from 'lodash';
+
+import db from 'src/db';
+import { getUserId } from 'src/auth';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import AccountTabs from './account-tabs';
 
-export default function AccountPage() {
+export default async function AccountPage() {
+  const id = await getUserId();
+  const result = await db.user.findUnique({where: {id}})
+  const user = _.omit(result, ['password']);
   return (
     <DashboardContent maxWidth='lg'>
-    <AccountTabs />
+    <AccountTabs data={{user}} />
     </DashboardContent>
   );
 }

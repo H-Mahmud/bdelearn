@@ -1,8 +1,8 @@
 'use client';
 
 import { z as zod } from 'zod';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
@@ -18,7 +18,6 @@ import { fData } from 'src/utils/format-number';
 import { toast } from 'src/components/snackbar';
 import { Form, Field, schemaHelper } from 'src/components/hook-form';
 
-import getUserData from './get-user-data';
 import updateUserAction from './update-user-action';
 
 
@@ -44,24 +43,8 @@ export const UpdateUserSchema = zod.object({
   bio: zod.string().min(1, { message: 'About is required!' }),
 });
 
-export default function AccountGeneral() {
-  /**
-   * @type {import('@prisma/client').User[]}
-   */
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-
-   ( async() => {
-    const data = await getUserData();
-    if (data) {
-      setUser(data);
-    } 
-    })()
-  }, [])
-
-
-
+ 
+export default function AccountGeneral({user}) {
   const defaultValues = {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',

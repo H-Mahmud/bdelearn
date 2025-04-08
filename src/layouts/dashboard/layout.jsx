@@ -151,6 +151,7 @@ export function DashboardLayout({ sx, children, data }) {
               isNavMini={isNavMini}
               layoutQuery={layoutQuery}
               cssVars={navColorVars.section}
+              slots={{bottomArea: false}}
               onToggleNav={() =>
                 settings.onUpdateField(
                   'navLayout',

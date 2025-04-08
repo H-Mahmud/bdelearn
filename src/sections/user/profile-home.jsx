@@ -1,5 +1,6 @@
 'use client';
 
+import _ from 'lodash';
 import { useRef } from 'react';
 
 import Fab from '@mui/material/Fab';
@@ -17,12 +18,15 @@ import { Table, TableRow, TableBody, TableCell, Typography, ButtonBase } from '@
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
+import { PROFILES } from 'src/auth';
 import { _socials } from 'src/_mock';
 import { CONFIG } from 'src/config-global';
 import { varAlpha } from 'src/theme/styles';
 
 import { toast, Snackbar } from 'src/components/snackbar';
 import { Iconify, SocialIcon } from 'src/components/iconify';
+
+import { RoleBasedGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
 
@@ -300,7 +304,9 @@ export function ProfileHome({ info, posts, user }) {
       <Snackbar />
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
+          <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
           {renderStudentId}
+          </RoleBasedGuard>
 
           {renderFollows}
 

@@ -75,13 +75,13 @@ export const navData = [
         title: 'Account',
         path: paths.dashboard.account.root,
         icon: ICONS.account,
-        children: [
-          { title: 'General', path: paths.dashboard.account.root },
-          { title: 'Billing', path: paths.dashboard.account.billing },
-          { title: 'Notification', path: paths.dashboard.account.notifications },
-          { title: 'Social Link', path: paths.dashboard.account.socialLink },
-          { title: 'Security', path: paths.dashboard.account.security },
-        ],
+        // children: [
+          // { title: 'General', path: paths.dashboard.account.root },
+          // { title: 'Billing', path: paths.dashboard.account.billing },
+          // { title: 'Notification', path: paths.dashboard.account.notifications },
+          // { title: 'Social Link', path: paths.dashboard.account.socialLink },
+          // { title: 'Security', path: paths.dashboard.account.security },
+        // ],
       },
       {
         title: 'User',

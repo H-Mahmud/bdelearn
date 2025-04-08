@@ -65,38 +65,7 @@ export const paths = {
     root: `/post`,
     details: (title) => `/post/${paramCase(title)}`,
     demo: { details: `/post/${paramCase(MOCK_TITLE)}` },
-  },
-  // AUTH
-  // auth: {
-  //   amplify: {
-  //     signIn: `${ROOTS.AUTH}/amplify/sign-in`,
-  //     verify: `${ROOTS.AUTH}/amplify/verify`,
-  //     signUp: `${ROOTS.AUTH}/amplify/sign-up`,
-  //     updatePassword: `${ROOTS.AUTH}/amplify/update-password`,
-  //     resetPassword: `${ROOTS.AUTH}/amplify/reset-password`,
-  //   },
-  //   jwt: {
-  //     signIn: `${ROOTS.AUTH}/jwt/sign-in`,
-  //     signUp: `${ROOTS.AUTH}/jwt/sign-up`,
-  //   },
-  //   firebase: {
-  //     signIn: `${ROOTS.AUTH}/firebase/sign-in`,
-  //     verify: `${ROOTS.AUTH}/firebase/verify`,
-  //     signUp: `${ROOTS.AUTH}/firebase/sign-up`,
-  //     resetPassword: `${ROOTS.AUTH}/firebase/reset-password`,
-  //   },
-  //   auth0: {
-  //     signIn: `${ROOTS.AUTH}/auth0/sign-in`,
-  //   },
-  //   supabase: {
-  //     signIn: `${ROOTS.AUTH}/supabase/sign-in`,
-  //     verify: `${ROOTS.AUTH}/supabase/verify`,
-  //     signUp: `${ROOTS.AUTH}/supabase/sign-up`,
-  //     updatePassword: `${ROOTS.AUTH}/supabase/update-password`,
-  //     resetPassword: `${ROOTS.AUTH}/supabase/reset-password`,
-  //   },
-  // },
-  
+  },  
   authDemo: {
     split: {
       signIn: `${ROOTS.AUTH_DEMO}/split/sign-in`,
@@ -123,10 +92,10 @@ export const paths = {
     studentList: `${ROOTS.DASHBOARD}/student-list`,
     account: {
       root: `${ROOTS.DASHBOARD}/account`,
-      billing: `${ROOTS.DASHBOARD}/account/billing`,
-      notifications: `${ROOTS.DASHBOARD}/account/notifications`,
-      socialLink: `${ROOTS.DASHBOARD}/account/social-links`,
-      security: `${ROOTS.DASHBOARD}/account/security`,
+      billing: `${ROOTS.DASHBOARD}/account?tab=billing`,
+      notifications: `${ROOTS.DASHBOARD}/account?tab=notifications`,
+      socialLink: `${ROOTS.DASHBOARD}/account?tab=social-links`,
+      security: `${ROOTS.DASHBOARD}/account?tab=security`,
     },
     group: {
       root: `${ROOTS.DASHBOARD}/group`,

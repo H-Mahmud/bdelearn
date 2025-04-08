@@ -50,3 +50,9 @@ export async function getUserId() {
 
   return session.user.id;
 }
+
+/**
+ * @type {import('@prisma/client').Profile[]}
+ */
+export const PROFILES = ['SUPER_ADMIN', 'ADMIN', 'CONTROLLER', 'COUNSELOR', 'TRAINER', 'STUDENT'];
+

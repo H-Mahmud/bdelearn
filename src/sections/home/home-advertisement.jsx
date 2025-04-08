@@ -65,9 +65,8 @@ export function HomeAdvertisement({ sx, ...other }) {
             color="primary"
             size="large"
             variant="contained"
-            target="_blank"
             rel="noopener"
-            href={paths.auth.student.signUp}
+            href={paths.auth.subAdmin.signUp}
           >
             Register Now
           </Button>
@@ -78,9 +77,8 @@ export function HomeAdvertisement({ sx, ...other }) {
             color="inherit"
             size="large"
             variant="outlined"
-            target="_blank"
             rel="noopener"
-            href={paths.auth.student.signIn}
+            href={paths.auth.subAdmin.signIn}
             sx={{
               color: 'common.white',
               borderColor: 'common.white',

@@ -188,7 +188,7 @@ export function ProfileHome({ info, posts, user }) {
   const renderShare = (
     <Card>
       <CardHeader title="Share your referral" />
-      <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, mt: 1, mb: 2, px:3 }}>
+      <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, mt: 1, mb: 2, px: 3 }}>
         <Button
           component={RouterLink}
           target="_blank"
@@ -305,7 +305,7 @@ export function ProfileHome({ info, posts, user }) {
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
           <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
-          {renderStudentId}
+            {renderStudentId}
           </RoleBasedGuard>
 
           {renderFollows}
@@ -318,7 +318,9 @@ export function ProfileHome({ info, posts, user }) {
 
       <Grid xs={12} md={8}>
         <Stack spacing={3}>
-          {renderShare}
+          <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
+            {renderShare}
+          </RoleBasedGuard>
 
           {renderUserDetails}
         </Stack>

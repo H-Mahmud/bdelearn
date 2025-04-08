@@ -6,8 +6,13 @@ import { Tab, Tabs } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 
+import { useTabs } from 'src/hooks/use-tabs';
+
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
+
+import AccountGeneral from './account-general';
+import AccountSecurity from './account-security';
 
 // ----------------------------------------------------------------------
 
@@ -17,21 +22,21 @@ const NAV_ITEMS = [
     label: 'General',
     icon: <Iconify icon="solar:user-id-bold" width={24} />,
   },
-  {
-    href: paths.dashboard.account.billing,
-    label: 'Billing',
-    icon: <Iconify icon="solar:bill-list-bold" width={24} />,
-  },
-  {
-    href: paths.dashboard.account.notifications,
-    label: 'Notifications',
-    icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
-  },
-  {
-    href: paths.dashboard.account.socialLink,
-    label: 'Social links',
-    icon: <Iconify icon="solar:share-bold" width={24} />,
-  },
+  // {
+  //   href: paths.dashboard.account.billing,
+  //   label: 'Billing',
+  //   icon: <Iconify icon="solar:bill-list-bold" width={24} />,
+  // },
+  // {
+  //   href: paths.dashboard.account.notifications,
+  //   label: 'Notifications',
+  //   icon: <Iconify icon="solar:bell-bing-bold" width={24} />,
+  // },
+  // {
+  //   href: paths.dashboard.account.socialLink,
+  //   label: 'Social links',
+  //   icon: <Iconify icon="solar:share-bold" width={24} />,
+  // },
   {
     href: paths.dashboard.account.security,
     label: 'Security',
@@ -45,8 +50,11 @@ export default function AccountTabs() {
   const pathname = usePathname();
   const activePath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
   const route = useRouter();
-
+  const tabs = useTabs(activePath);
+  console.log('active Path', activePath);
+  console.log('tab value', tabs.value);
   const activeTab = NAV_ITEMS.find((item) => item.href === activePath)?.label || 'General';
+
 
   return (
     <>
@@ -60,7 +68,7 @@ export default function AccountTabs() {
         sx={{ mb: { xs: 3, md: 5 } }}
       />
 
-      <Tabs value={activePath} sx={{ mb: { xs: 3, md: 5 } }}>
+      <Tabs value={tabs.value} onChange={tabs.onChange} sx={{ mb: { xs: 3, md: 5 } }}>
         {NAV_ITEMS.map((tab) => (
           <Tab
             key={tab.href}
@@ -73,6 +81,9 @@ export default function AccountTabs() {
           />
         ))}
       </Tabs>
+
+      {tabs.value === paths.dashboard.account.root && <AccountGeneral />}
+      {tabs.value === paths.dashboard.account.security && <AccountSecurity />}
       </>
   );
 }

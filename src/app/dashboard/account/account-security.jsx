@@ -36,7 +36,7 @@ export const ChangePassWordSchema = zod
 
 // ----------------------------------------------------------------------
 
-export default function AccountChangePassword() {
+export default function AccountSecurity() {
   const password = useBoolean();
 
   const defaultValues = { oldPassword: '', newPassword: '', confirmNewPassword: '' };

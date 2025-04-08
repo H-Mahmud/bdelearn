@@ -300,7 +300,7 @@ export function ProfileHome({ info, posts, user }) {
       <Snackbar />
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
-          {user.profile === 'STUDENT' ? renderStudentId : null}
+          {renderStudentId}
 
           {renderFollows}
 

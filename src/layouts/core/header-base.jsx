@@ -1,11 +1,13 @@
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import { Button } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import { Logo } from 'src/components/logo';
+import { Iconify } from 'src/components/iconify';
 
 import { HeaderSection } from './header-section';
 import { Searchbar } from '../components/searchbar';
@@ -60,6 +62,7 @@ export function HeaderBase({
     signIn = true,
     signUp = true,
     account = true,
+    dashboard = false,
     helpLink = true,
     settings = true,
     contacts = false,
@@ -155,13 +158,22 @@ export function HeaderBase({
               {/* -- Account drawer -- */}
               {account && <AccountDrawer data-slot="account" data={data?.account} />}
 
+              {/* -- Dashboard button -- */}
+              {dashboard && (
+                <Button component={RouterLink} href={paths.dashboard.root}>
+                  <Iconify
+                    icon="ic:round-account-circle"
+                    width={38}
+                    color={theme.palette.primary.main}
+                  />
+                </Button>
+              )}
+
               {/* -- Sign in button -- */}
               {signIn && <SignInButton />}
 
               {/* -- Sign Up button -- */}
-              {signUp && (
-             <SignUpButton up={theme.breakpoints.up} layoutQuery={layoutQuery} />
-              )}
+              {signUp && <SignUpButton up={theme.breakpoints.up} layoutQuery={layoutQuery} />}
             </Box>
 
             {slots?.rightAreaEnd}

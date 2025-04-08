@@ -53,8 +53,9 @@ export function MainLayout({ sx, data, children }) {
               helpLink: false,
               contacts: false,
               searchbar: false,
-              signIn: !isLoggedIn,
               account: false,
+              signIn: !isLoggedIn,
+              dashboard: isLoggedIn,
               signUp: !isLoggedIn,
             }}
             slots={{

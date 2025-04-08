@@ -159,8 +159,6 @@ export function HomeFooter({ sx }) {
         <Logo />
         <Box sx={{ mt: 1, typography: 'caption' }}>
           © All rights reserved.
-          <br /> made by
-          <Link href="https://minimals.cc/"> minimals.cc </Link>
         </Box>
       </Container>
     </Box>

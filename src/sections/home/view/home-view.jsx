@@ -7,18 +7,19 @@ import { ScrollProgress, useScrollProgress } from 'src/components/animate/scroll
 
 import { HomeHero } from '../home-hero';
 import { HomeFAQs } from '../home-faqs';
+import { CourseList } from '../course-list';
 import { HomeZoneUI } from '../home-zone-ui';
 import { HomeMinimal } from '../home-minimal';
 import { HomePricing } from '../home-pricing';
 import { HomeTestimonials } from '../home-testimonials';
 import { HomeIntegrations } from '../home-integrations';
 import { HomeAdvertisement } from '../home-advertisement';
-
 // ----------------------------------------------------------------------
 
-export function HomeView() {
+export function HomeView({data}) {
   const pageProgress = useScrollProgress();
 
+  const {courses} = data;
   return (
     <>
       <ScrollProgress
@@ -27,11 +28,19 @@ export function HomeView() {
         sx={{ position: 'fixed' }}
       />
 
+
+
+
+
       <BackToTop />
 
       <HomeHero />
 
       <Stack sx={{ position: 'relative', bgcolor: 'background.default' }}>
+
+      <CourseList title="Featured course" list={courses} />
+
+
         <HomeMinimal />
 
 

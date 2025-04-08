@@ -15,7 +15,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 import { fData } from 'src/utils/format-number';
 
-import { toast } from 'src/components/snackbar';
+import { toast, Snackbar } from 'src/components/snackbar';
 import { Form, Field, schemaHelper } from 'src/components/hook-form';
 
 import updateUserAction from './update-user-action';
@@ -99,6 +99,7 @@ export default function AccountGeneral({user}) {
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
+      <Snackbar />
       <Grid container spacing={3}>
         <Grid xs={12} md={4}>
           <Card

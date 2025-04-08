@@ -1,6 +1,5 @@
 'use client';
 
-import { Toaster } from 'sonner';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -48,8 +47,6 @@ export function UserProfileView({data}) {
 
   return (
     <DashboardContent>
-      <Toaster position='top-right' richColors />
-
       <Card sx={{ mb: 3, height: 290 }}>
         <ProfileCover
           role={user.profile}

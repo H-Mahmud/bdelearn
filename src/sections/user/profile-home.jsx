@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import { toast } from 'sonner';
 
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
@@ -22,6 +21,7 @@ import { _socials } from 'src/_mock';
 import { CONFIG } from 'src/config-global';
 import { varAlpha } from 'src/theme/styles';
 
+import { toast, Snackbar } from 'src/components/snackbar';
 import { Iconify, SocialIcon } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -297,6 +297,7 @@ export function ProfileHome({ info, posts, user }) {
 
   return (
     <Grid container spacing={3}>
+      <Snackbar />
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
           {user.profile === 'STUDENT' ? renderStudentId : null}

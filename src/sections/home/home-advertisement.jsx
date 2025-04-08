@@ -11,7 +11,6 @@ import { paths } from 'src/routes/paths';
 import { CONFIG } from 'src/config-global';
 import { varAlpha, textGradient } from 'src/theme/styles';
 
-import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 import { varFade, MotionViewport } from 'src/components/animate';
 
@@ -38,7 +37,7 @@ export function HomeAdvertisement({ sx, ...other }) {
         sx={{ m: 0, color: 'common.white', typography: { xs: 'h2', md: 'h1' } }}
       >
         Get started with
-        <br /> Minimal kit
+        <br /> {CONFIG.site.name}
         <Box
           component="span"
           sx={{
@@ -68,9 +67,9 @@ export function HomeAdvertisement({ sx, ...other }) {
             variant="contained"
             target="_blank"
             rel="noopener"
-            href={paths.minimalStore}
+            href={paths.auth.student.signUp}
           >
-            Purchase now
+            Register Now
           </Button>
         </m.div>
 
@@ -81,15 +80,14 @@ export function HomeAdvertisement({ sx, ...other }) {
             variant="outlined"
             target="_blank"
             rel="noopener"
-            href={paths.freeUI}
-            endIcon={<Iconify width={16} icon="eva:external-link-fill" sx={{ mr: 0.5 }} />}
+            href={paths.auth.student.signIn}
             sx={{
               color: 'common.white',
               borderColor: 'common.white',
               '&:hover': { borderColor: 'currentColor' },
             }}
           >
-            Get free version
+           Sign In
           </Button>
         </m.div>
       </Stack>

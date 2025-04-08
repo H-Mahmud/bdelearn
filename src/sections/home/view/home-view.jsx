@@ -8,7 +8,6 @@ import { ScrollProgress, useScrollProgress } from 'src/components/animate/scroll
 import { HomeHero } from '../home-hero';
 import { HomeFAQs } from '../home-faqs';
 import { CourseList } from '../course-list';
-import { HomeZoneUI } from '../home-zone-ui';
 import { HomeMinimal } from '../home-minimal';
 import { HomePricing } from '../home-pricing';
 import { HomeTestimonials } from '../home-testimonials';
@@ -40,11 +39,7 @@ export function HomeView({data}) {
 
       <CourseList title="Featured course" list={courses} />
 
-
         <HomeMinimal />
-
-
-
 
         <HomeIntegrations />
 
@@ -54,7 +49,7 @@ export function HomeView({data}) {
 
         <HomeFAQs />
 
-        <HomeZoneUI />
+        {/* <HomeZoneUI /> */}
 
         <HomeAdvertisement />
       </Stack>

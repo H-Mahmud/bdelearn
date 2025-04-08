@@ -87,7 +87,7 @@ export function ForgotPasswordForm() {
 
       <Link
         component={RouterLink}
-        href={paths.studentAuth.signIn}
+        href={paths.auth.student.signIn}
         color="inherit"
         variant="subtitle2"
         sx={{ mx: 'auto', alignItems: 'center', display: 'inline-flex' }}

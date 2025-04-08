@@ -184,7 +184,7 @@ export function ProfileHome({ info, posts, user }) {
   const renderShare = (
     <Card>
       <CardHeader title="Share your referral" />
-      <Stack sx={{ flexDirection: 'row', spacing: 5, mt: 1, mb: 2 }}>
+      <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, mt: 1, mb: 2, px:3 }}>
         <Button
           component={RouterLink}
           target="_blank"

@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { m, useScroll, useSpring, useTransform, useMotionValueEvent } from 'framer-motion';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -64,15 +63,12 @@ export function HomeHero({ sx, ...other }) {
           ...theme.typography.h2,
           my: 0,
           mx: 'auto',
-          maxWidth: 680,
+          maxWidth: 780,
           fontFamily: theme.typography.fontSecondaryFamily,
           [theme.breakpoints.up(lgKey)]: { fontSize: 72, lineHeight: '90px' },
         }}
       >
-        <Box component="span" sx={{ width: 1, opacity: 0.24 }}>
-          Boost your building
-        </Box>
-        process with
+        Learn, Earn, Succeed
         <Box
           component={m.span}
           animate={{ backgroundPosition: '200% center' }}
@@ -90,7 +86,7 @@ export function HomeHero({ sx, ...other }) {
             ml: { xs: 0.75, md: 1, xl: 1.5 },
           }}
         >
-          Minimal
+          Source of Income <br /> E-Learning Platform
         </Box>
       </Box>
     </MInview>
@@ -106,7 +102,7 @@ export function HomeHero({ sx, ...other }) {
           [theme.breakpoints.up(lgKey)]: { fontSize: 20, lineHeight: '36px' },
         }}
       >
-        {`The starting point for your next project is based on MUI. \nEasy customization helps you build apps faster and better.`}
+        <strong>BD E Learn</strong> is an online platform where you can acquire valuable skills <br /> and earn income by referring others to join and learn.
       </Typography>
     </MInview>
   );
@@ -130,7 +126,7 @@ export function HomeHero({ sx, ...other }) {
             />
           ))}
         </AvatarGroup>
-        160+ Happy customers
+        1364+ Student Already Registered
       </Box>
     </MInview>
   );
@@ -141,41 +137,14 @@ export function HomeHero({ sx, ...other }) {
         <Stack alignItems="center" spacing={2.5}>
           <Button
             component={RouterLink}
-            href={paths.dashboard.root}
+            href={paths.auth.student.signUp}
             color="inherit"
             size="large"
             variant="contained"
             startIcon={<Iconify width={24} icon="iconoir:flash" />}
           >
-            <span>
-              Live preview
-              <Box
-                component="small"
-                sx={{
-                  mt: '-3px',
-                  opacity: 0.64,
-                  display: 'flex',
-                  fontSize: theme.typography.pxToRem(10),
-                  fontWeight: theme.typography.fontWeightMedium,
-                }}
-              >
-                v{CONFIG.site.version}
-              </Box>
-            </span>
+           Register Now
           </Button>
-
-          <Link
-            color="inherit"
-            variant="body2"
-            target="_blank"
-            rel="noopener"
-            href={paths.freeUI}
-            underline="always"
-            sx={{ gap: 0.5, alignItems: 'center', display: 'inline-flex' }}
-          >
-            Get free version
-            <Iconify width={16} icon="eva:external-link-fill" />
-          </Link>
         </Stack>
       </MInview>
 
@@ -186,11 +155,11 @@ export function HomeHero({ sx, ...other }) {
           variant="outlined"
           target="_blank"
           rel="noopener"
-          href={paths.figma}
-          startIcon={<Iconify width={24} icon="solar:figma-outline" />}
+          href={paths.auth.student.signIn}
+          startIcon={<Iconify width={24} icon="solar:login-outline" />}
           sx={{ borderColor: 'text.primary' }}
         >
-          Figma preview
+         Sign In
         </Button>
       </MInview>
     </Box>
@@ -283,7 +252,7 @@ export function HomeHero({ sx, ...other }) {
           </Stack>
           <m.div style={{ y: y3 }}>{renderRatings}</m.div>
           <m.div style={{ y: y4 }}>{renderButtons}</m.div>
-          <m.div style={{ y: y5 }}>{renderIcons}</m.div>
+          {/* <m.div style={{ y: y5 }}>{renderIcons}</m.div> */}
         </Container>
 
         <HeroBackground />

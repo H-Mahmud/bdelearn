@@ -52,7 +52,7 @@ export const navData = [
     items: [
       { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
       { title: 'Profile', path: paths.dashboard.profile, icon: ICONS.profile },
-      { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
+      { title: 'Analytics', path: paths.dashboard.analytics, icon: ICONS.analytics },
     ],
   },
   /**

@@ -118,6 +118,7 @@ export const paths = {
   dashboard: {
     root: ROOTS.DASHBOARD,
     profile: `${ROOTS.DASHBOARD}/profile`,
+    analytics: `${ROOTS.DASHBOARD}/analytics`,
     subAdminList: `${ROOTS.DASHBOARD}/sub-admin-list`,
     studentList: `${ROOTS.DASHBOARD}/student-list`,
     account: {
@@ -127,8 +128,6 @@ export const paths = {
       socialLink: `${ROOTS.DASHBOARD}/account/social-links`,
       security: `${ROOTS.DASHBOARD}/account/security`,
     },
-    two: `${ROOTS.DASHBOARD}/two`,
-    three: `${ROOTS.DASHBOARD}/three`,
     group: {
       root: `${ROOTS.DASHBOARD}/group`,
       five: `${ROOTS.DASHBOARD}/group/five`,

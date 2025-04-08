@@ -15,7 +15,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import { Table, TableRow, TableBody, TableCell, Typography, ButtonBase } from '@mui/material';
 
+import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
+
 import { _socials } from 'src/_mock';
+import { CONFIG } from 'src/config-global';
 import { varAlpha } from 'src/theme/styles';
 
 import { Iconify, SocialIcon } from 'src/components/iconify';
@@ -32,26 +36,29 @@ export function ProfileHome({ info, posts, user }) {
   };
 
   const renderStudentId = (
-<Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
-  <Stack
-    direction="row"
-    divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
-  >
-    <Stack width={1}>
-     <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-     {user.referralCode}  
-      <ButtonBase onClick={() => {navigator.clipboard.writeText(user.referralCode); toast.success('Student ID copied to clipboard successfully!')}}>
-      <Iconify icon="solar:copy-bold"  />
-      </ButtonBase>
-     </Stack>
-      <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-        Student ID
-      </Box>
-    </Stack>
-  
-  </Stack>
-</Card>
-
+    <Card sx={{ py: 3, textAlign: 'center', typography: 'h4' }}>
+      <Stack
+        direction="row"
+        divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+      >
+        <Stack width={1}>
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+            {user.referralCode}
+            <ButtonBase
+              onClick={() => {
+                navigator.clipboard.writeText(user.referralCode);
+                toast.success('Student ID copied to clipboard successfully!');
+              }}
+            >
+              <Iconify icon="solar:copy-bold" />
+            </ButtonBase>
+          </Stack>
+          <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
+            Student ID
+          </Box>
+        </Stack>
+      </Stack>
+    </Card>
   );
 
   const renderFollows = (
@@ -172,9 +179,57 @@ export function ProfileHome({ info, posts, user }) {
     </Card>
   );
 
+  const referralUrl = `${CONFIG.site.basePath}${paths.auth.student.signUp}?referralCode=${user.referralCode}`;
+  const messageText = `Create a free account to get courses and learn money from referral: ${referralUrl}`;
   const renderShare = (
     <Card>
       <CardHeader title="Share your referral" />
+      <Stack sx={{ flexDirection: 'row', spacing: 5, mt: 1, mb: 2 }}>
+        <Button
+          component={RouterLink}
+          target="_blank"
+          href={`https://www.facebook.com/sharer/sharer.php?u=${referralUrl}`}
+        >
+          <Iconify icon="eva:facebook-fill" width={48} color="#1877f2" />
+        </Button>
+
+        <Button
+          component={RouterLink}
+          target="_blank"
+          href={`fb-messenger://share?link=${referralUrl}`}
+        >
+          <Iconify icon="mingcute:messenger-line" width={48} color="#2692f0" />
+        </Button>
+
+        <Button component={RouterLink} target="_blank" href={`tg://msg?text=${messageText}`}>
+          <Iconify icon="mingcute:telegram-line" width={48} color="#2a9cd7" />
+        </Button>
+
+        <Button component={RouterLink} target="_blank" href={`whatsapp://send?text=${messageText}`}>
+          <Iconify icon="ic:baseline-whatsapp" width={48} color="#25d366" />
+        </Button>
+
+        <Button component={RouterLink} target="_blank" href={`sms:?body=${messageText}`}>
+          <Iconify icon="ic:baseline-perm-phone-msg" width={48} color="#5bf174" />
+        </Button>
+
+        <Button
+          component={RouterLink}
+          target="_blank"
+          href={`mailto:?subject=Create%20a%20Free%20Account%20and%20Start%20Learning%20Today&body=${messageText}`}
+        >
+          <Iconify icon="ic:baseline-attach-email" width={48} color="#fed83a" />
+        </Button>
+
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(referralUrl);
+            toast.success('Referral Url copied to clipboard successfully!');
+          }}
+        >
+          <Iconify icon="ic:baseline-content-copy" width={48} color="#3f91f0" />
+        </Button>
+      </Stack>
     </Card>
   );
 
@@ -244,7 +299,7 @@ export function ProfileHome({ info, posts, user }) {
     <Grid container spacing={3}>
       <Grid xs={12} md={4}>
         <Stack spacing={3}>
-          {user.profile === 'STUDENT'? renderStudentId: null}
+          {user.profile === 'STUDENT' ? renderStudentId : null}
 
           {renderFollows}
 

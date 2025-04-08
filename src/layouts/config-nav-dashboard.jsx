@@ -11,6 +11,8 @@ const icon = (name) => <SvgColor src={`${CONFIG.site.basePath}/assets/icons/navb
 const ICONS = {
   dashboard: icon('ic-dashboard'),
   profile: icon('ic-profile'),
+  analytics: icon('ic-analytics'),
+  referral: icon('ic-referral'),
   subAdmin: icon('ic-sub-admin'),
   students: icon('ic-student'),
   account: icon('ic-account'),
@@ -37,7 +39,6 @@ const ICONS = {
   external: icon('ic-external'),
   menuItem: icon('ic-menu-item'),
   ecommerce: icon('ic-ecommerce'),
-  analytics: icon('ic-analytics'),
   parameter: icon('ic-parameter'),
 };
 
@@ -53,6 +54,7 @@ export const navData = [
       { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
       { title: 'Profile', path: paths.dashboard.profile, icon: ICONS.profile },
       { title: 'Analytics', path: paths.dashboard.analytics, icon: ICONS.analytics },
+      { title: 'My Referrals', path: paths.dashboard.myReferrals, icon: ICONS.referral },
     ],
   },
   /**

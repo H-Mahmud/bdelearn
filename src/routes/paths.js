@@ -88,6 +88,7 @@ export const paths = {
     root: ROOTS.DASHBOARD,
     profile: `${ROOTS.DASHBOARD}/profile`,
     analytics: `${ROOTS.DASHBOARD}/analytics`,
+    myReferrals: `${ROOTS.DASHBOARD}/my-referrals`,
     subAdminList: `${ROOTS.DASHBOARD}/sub-admin-list`,
     studentList: `${ROOTS.DASHBOARD}/student-list`,
     account: {

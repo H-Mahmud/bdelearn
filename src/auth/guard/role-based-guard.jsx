@@ -1,3 +1,3 @@
 export function RoleBasedGuard({children, currentRole, acceptRoles }) {
-   return Object.values(acceptRoles).includes(currentRole) ? children : null;
+   return acceptRoles !== undefined && Object.values(acceptRoles).includes(currentRole) ? children : null;
 }

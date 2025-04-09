@@ -47,9 +47,11 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
   return (
     <>
       <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}>
+       <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['superAdmin', 'admin'])}>
         <TableCell padding="checkbox">
-          <Checkbox id={row.id} checked={selected} onClick={onSelectRow} />
-        </TableCell>
+            <Checkbox id={row.id} checked={selected} onClick={onSelectRow} />
+          </TableCell>
+       </RoleBasedGuard>
 
         <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
           <TableCell sx={{ whiteSpace: 'nowrap' }}>Counselor Name</TableCell>

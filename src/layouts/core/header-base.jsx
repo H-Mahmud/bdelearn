@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { Button } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 
 import { paths } from 'src/routes/paths';
@@ -160,13 +160,13 @@ export function HeaderBase({
 
               {/* -- Dashboard button -- */}
               {dashboard && (
-                <Button component={RouterLink} href={paths.dashboard.root}>
+                <IconButton component={RouterLink} href={paths.dashboard.root}>
                   <Iconify
                     icon="ic:round-account-circle"
                     width={38}
                     color={theme.palette.primary.main}
                   />
-                </Button>
+                </IconButton>
               )}
 
               {/* -- Sign in button -- */}

@@ -10,7 +10,7 @@ import { varAlpha } from 'src/theme/styles';
 import { Label } from 'src/components/label';
 
 export default function StudentTableTabs({ data }) {
-  const {statuses, userCount, params} = data;
+  const {statuses, studentCount, params} = data;
   const [value, setValue,] = useState(params?.status ?? '');
 
   const urlParams = new URLSearchParams(params);
@@ -50,7 +50,7 @@ export default function StudentTableTabs({ data }) {
                 'default'
               }
             >
-              {userCount[tab.value] ? userCount[tab.value] : 0}
+              {studentCount[tab.value] ? studentCount[tab.value] : 0}
             </Label>
           }
         />

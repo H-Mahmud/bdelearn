@@ -59,7 +59,7 @@ export default function StudentList({data}) {
 
   const confirm = useBoolean();
 
-  const {userCount, users,user, statuses, params} = data;
+  const { studentList, studentCount, statuses,   params,  user} = data;
 
   /**
    * @type {[import('@prisma/client').User[] | null]}
@@ -132,7 +132,7 @@ export default function StudentList({data}) {
   return (
     <>
         <Card>
-         <StudentTableTabs data={{userCount, statuses, params}} />
+         <StudentTableTabs data={{studentCount, statuses, params}} />
 
           <UserTableToolbar data={{params}} onResetPage={table.onResetPage} />
 
@@ -184,7 +184,7 @@ export default function StudentList({data}) {
                 />
 
                 <TableBody>
-                  {users
+                  {studentList
                     .map((row) => (
                       <UserTableRow
                         user={user}

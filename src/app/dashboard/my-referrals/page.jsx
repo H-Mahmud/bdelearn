@@ -54,8 +54,8 @@ export default async function MyReferralsPage({searchParams }) {
     ]
   }
 
-  const users = await db.user.findMany({where})
-  const userCount = await getUserCountByStatus();
+  const students = await db.user.findMany({where})
+  const studentCountByStatus = await getUserCountByStatus();
 
   const currentUser = await db.user.findUnique({where: {
     id: (await getUserId())
@@ -81,9 +81,9 @@ export default async function MyReferralsPage({searchParams }) {
         sx={{ mb: { xs: 3, md: 5 } }}
       />
       <StudentList data={{
-        users,
-        userCount,
-        statuses: STATUS_OPTION,
+         studentList: students,
+         studentCount: studentCountByStatus,
+         statuses: STATUS_OPTION,
         params,
         user: currentUser
       }} />

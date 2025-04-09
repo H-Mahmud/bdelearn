@@ -60,7 +60,7 @@ export default function StudentList({data}) {
 
   const confirm = useBoolean();
 
-  const {userCount, users, statuses, params} = data;
+  const {userCount, users,user, statuses, params} = data;
 
   /**
    * @type {[import('@prisma/client').User[] | null]}
@@ -169,6 +169,7 @@ export default function StudentList({data}) {
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
+                  user={user}
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
@@ -187,6 +188,7 @@ export default function StudentList({data}) {
                   {users
                     .map((row) => (
                       <UserTableRow
+                        user={user}
                         key={row.id}
                         row={row}
                         selected={table.selected.includes(row.id)}

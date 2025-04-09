@@ -1,9 +1,15 @@
+import _ from 'lodash';
+
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
+
+import { PROFILES } from 'src/auth';
+
+import { RoleBasedGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +28,7 @@ const visuallyHidden = {
 // ----------------------------------------------------------------------
 
 export function TableHeadCustom({
+  user,
   sx,
   order,
   onSort,
@@ -47,6 +54,10 @@ export function TableHeadCustom({
             />
           </TableCell>
         )}
+
+        <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
+          <TableCell sx={{ width: '200', minWidth: 250 }}>Counsellor</TableCell>
+        </RoleBasedGuard>
 
         {headLabel.map((headCell) => (
           <TableCell

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -13,24 +15,27 @@ import IconButton from '@mui/material/IconButton';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { PROFILES } from 'src/auth';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
+import { RoleBasedGuard } from 'src/auth/guard';
+
 import { UserQuickEditForm } from '../user/user-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
-export function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
+export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const confirm = useBoolean();
 
   const popover = usePopover();
 
   const quickEdit = useBoolean();
 
-  
-  const fullName = `${row.firstName} ${row.lastName}`
+  const fullName = `${row.firstName} ${row.lastName}`;
   const createdAt = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'short',
@@ -45,6 +50,10 @@ export function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRo
         <TableCell padding="checkbox">
           <Checkbox id={row.id} checked={selected} onClick={onSelectRow} />
         </TableCell>
+
+        <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>Counselor Name</TableCell>
+        </RoleBasedGuard>
 
         <TableCell>
           <Stack spacing={2} direction="row" alignItems="center">

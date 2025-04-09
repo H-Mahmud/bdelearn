@@ -4,6 +4,7 @@ import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import db from 'src/db';
+import { getUserId } from 'src/auth';
 import { CONFIG } from 'src/config-global';
 import { getUserCountByStatus } from 'src/model/user';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -56,6 +57,12 @@ export default async function MyReferralsPage({searchParams }) {
   const users = await db.user.findMany({where})
   const userCount = await getUserCountByStatus();
 
+  const currentUser = await db.user.findUnique({where: {
+    id: (await getUserId())
+  }, select: {
+    profile: true
+  }})
+
   return (
     <DashboardContent>
       <CustomBreadcrumbs
@@ -77,7 +84,8 @@ export default async function MyReferralsPage({searchParams }) {
         users,
         userCount,
         statuses: STATUS_OPTION,
-        params
+        params,
+        user: currentUser
       }} />
     </DashboardContent>
   );

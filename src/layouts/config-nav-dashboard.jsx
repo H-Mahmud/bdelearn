@@ -85,26 +85,26 @@ export const navData = [
           // { title: 'Security', path: paths.dashboard.account.security },
         // ],
       },
-      {
-        title: 'User',
-        path: paths.dashboard.user.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Profile', path: paths.dashboard.user.root },
-          { title: 'Create', path: paths.dashboard.user.new },
-          { title: 'Edit', path: paths.dashboard.user.demo.edit },
-        ],
-      },
-      {
-        title: 'Group',
-        path: paths.dashboard.group.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Four', path: paths.dashboard.group.root },
-          { title: 'Five', path: paths.dashboard.group.five },
-          { title: 'Six', path: paths.dashboard.group.six },
-        ],
-      },
+      // {
+      //   title: 'User',
+      //   path: paths.dashboard.user.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'Profile', path: paths.dashboard.user.root },
+      //     { title: 'Create', path: paths.dashboard.user.new },
+      //     { title: 'Edit', path: paths.dashboard.user.demo.edit },
+      //   ],
+      // },
+      // {
+      //   title: 'Group',
+      //   path: paths.dashboard.group.root,
+      //   icon: ICONS.user,
+      //   children: [
+      //     { title: 'Four', path: paths.dashboard.group.root },
+      //     { title: 'Five', path: paths.dashboard.group.five },
+      //     { title: 'Six', path: paths.dashboard.group.six },
+      //   ],
+      // },
     ],
   },
 ];

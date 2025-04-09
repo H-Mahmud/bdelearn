@@ -51,8 +51,7 @@ export default function AccountTabs({data}) {
   const activePath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
   const route = useRouter();
   const tabs = useTabs(activePath);
-  console.log('active Path', activePath);
-  console.log('tab value', tabs.value);
+  
   const activeTab = NAV_ITEMS.find((item) => item.href === activePath)?.label || 'General';
 
 const {user} = data;

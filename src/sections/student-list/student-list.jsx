@@ -29,7 +29,6 @@ import {
   TableNoData,
   getComparator,
   TableEmptyRows,
-  TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
@@ -37,6 +36,7 @@ import {
 import { UserTableRow } from './user-table-row';
 import StudentTableTabs from './student-table-tabs';
 import { UserTableToolbar } from './user-table-toolbar';
+import { StudentTableHead } from './student-table-head';
 import { UserTableFiltersResult } from './user-table-filters-result';
 
 // ----------------------------------------------------------------------
@@ -164,7 +164,7 @@ export default function StudentList({data}) {
 
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
-                <TableHeadCustom
+                <StudentTableHead
                   user={user}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}

@@ -37,6 +37,22 @@ export default async function MyReferralsPage({searchParams }) {
     }
   });
 
+
+  const keyword = params?.s;
+  if(keyword) {
+    where.OR = [
+      { email: { contains: keyword, mode: "insensitive" } },
+      { phoneNumber: { contains: keyword, mode: "insensitive" } },
+      { referralCode: { contains: keyword, mode: "insensitive" } },
+      { firstName: { contains: keyword, mode: "insensitive" } },
+      { lastName: { contains: keyword, mode: "insensitive" } },
+      { country: { contains: keyword, mode: "insensitive" } },
+      { city: { contains: keyword, mode: "insensitive" } },
+      { zipCode: { contains: keyword, mode: "insensitive" } },
+      { bio: { contains: keyword, mode: "insensitive" } },
+    ]
+  }
+
   const users = await db.user.findMany({where})
   const userCount = await getUserCountByStatus();
 

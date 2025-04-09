@@ -135,7 +135,7 @@ export default function StudentList({data}) {
         <Card>
          <StudentTableTabs data={{userCount, statuses, params}} />
 
-          <UserTableToolbar filters={filters} onResetPage={table.onResetPage} />
+          <UserTableToolbar data={{params}} onResetPage={table.onResetPage} />
 
           {canReset && (
             <UserTableFiltersResult

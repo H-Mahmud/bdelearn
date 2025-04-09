@@ -1,11 +1,68 @@
-import { CONFIG } from 'src/config-global';
+import { Button } from '@mui/material';
 
-import { BlankView } from 'src/sections/blank/view';
+import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
+
+import db from 'src/db';
+import { CONFIG } from 'src/config-global';
+import { getUserCountByStatus } from 'src/model/user';
+import { DashboardContent } from 'src/layouts/dashboard';
+
+import { Iconify } from 'src/components/iconify';
+import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
+
+import StudentList from 'src/sections/student-list/student-list';
+
+
+const STATUS_OPTION = [
+  { value: '', label: 'All' },
+  { value: 'ACTIVE', label: 'Active' },
+  { value: 'INACTIVE', label: 'Inactive' },
+  { value: 'PENDING', label: 'Pending' },
+  { value: 'SUSPENDED', label: 'Suspended' },
+  { value: 'BLOCKED', label: 'Blocked' },
+];
 
 // ----------------------------------------------------------------------
 
 export const metadata = { title: `My Referrals | Dashboard - ${CONFIG.site.name}` };
 
-export default function MyReferralsPage() {
-  return <BlankView title="My Referrals" />;
+export default async function MyReferralsPage({searchParams }) {
+  const params = (await searchParams);
+  const where = {}
+
+  STATUS_OPTION.forEach(item => {
+    if(item.value && item.value === params.status) {
+      where.status = params.status
+    }
+  });
+
+  const users = await db.user.findMany({where})
+  const userCount = await getUserCountByStatus();
+
+  return (
+    <DashboardContent>
+      <CustomBreadcrumbs
+        heading="My Referrals"
+        links={[{ name: 'Dashboard', href: paths.dashboard.root }, { name: 'My Referrals' }]}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.user.new}
+            variant="contained"
+            startIcon={<Iconify icon="mingcute:add-line" />}
+          >
+            New user
+          </Button>
+        }
+        sx={{ mb: { xs: 3, md: 5 } }}
+      />
+      <StudentList data={{
+        users,
+        userCount,
+        statuses: STATUS_OPTION,
+        params
+      }} />
+    </DashboardContent>
+  );
 }

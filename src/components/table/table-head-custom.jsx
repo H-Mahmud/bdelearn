@@ -1,13 +1,9 @@
-import _ from 'lodash';
-
+import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
-
-import { PROFILES } from 'src/auth';
-
-import { RoleBasedGuard } from 'src/auth/guard';
+import TableSortLabel from '@mui/material/TableSortLabel';
 
 // ----------------------------------------------------------------------
 
@@ -26,8 +22,11 @@ const visuallyHidden = {
 // ----------------------------------------------------------------------
 
 export function TableHeadCustom({
-  user,
   sx,
+  order,
+  onSort,
+  orderBy,
+  headLabel,
   rowCount = 0,
   numSelected = 0,
   onSelectAllRows,
@@ -35,36 +34,47 @@ export function TableHeadCustom({
   return (
     <TableHead sx={sx}>
       <TableRow>
-        <RoleBasedGuard
-          currentRole={user.profile}
-          acceptRoles={_.pick(PROFILES, ['superAdmin', 'admin'])}
-        >
-          {onSelectAllRows && (
-            <TableCell padding="checkbox">
-              <Checkbox
-                indeterminate={!!numSelected && numSelected < rowCount}
-                checked={!!rowCount && numSelected === rowCount}
-                onChange={(event) => onSelectAllRows(event.target.checked)}
-                inputProps={{
-                  name: 'select-all-rows',
-                  'aria-label': 'select all rows',
-                }}
-              />
-            </TableCell>
-          )}
-        </RoleBasedGuard>
+        {onSelectAllRows && (
+          <TableCell padding="checkbox">
+            <Checkbox
+              indeterminate={!!numSelected && numSelected < rowCount}
+              checked={!!rowCount && numSelected === rowCount}
+              onChange={(event) => onSelectAllRows(event.target.checked)}
+              inputProps={{
+                name: 'select-all-rows',
+                'aria-label': 'select all rows',
+              }}
+            />
+          </TableCell>
+        )}
 
-        <TableCell sx={{ width: 120, minWidth: 120 }}>Student ID</TableCell>
-        <TableCell>Name</TableCell>
+        {headLabel.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={headCell.align || 'left'}
+            sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ width: headCell.width, minWidth: headCell.minWidth }}
+          >
+            {onSort ? (
+              <TableSortLabel
+                hideSortIcon
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={() => onSort(headCell.id)}
+              >
+                {headCell.label}
 
-        <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
-          <TableCell sx={{ width: 200, minWidth: 250 }}>Counsellor</TableCell>
-        </RoleBasedGuard>
-
-        <TableCell sx={{ width: 160, minWidth: 120 }}>Phone number</TableCell>
-        <TableCell sx={{ width: 200, minWidth: 120 }}>Joined</TableCell>
-        <TableCell sx={{ width: 40, minWidth: 40 }}>Status</TableCell>
-        <TableCell  sx={{ width: 40, minWidth: 40 }}>Whatsapp</TableCell>
+                {orderBy === headCell.id ? (
+                  <Box sx={{ ...visuallyHidden }}>
+                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            ) : (
+              headCell.label
+            )}
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
   );

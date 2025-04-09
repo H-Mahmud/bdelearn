@@ -53,6 +53,8 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
           </TableCell>
        </RoleBasedGuard>
 
+       <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.referralCode}</TableCell>
+
         <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
           <TableCell sx={{ whiteSpace: 'nowrap' }}>Counselor Name</TableCell>
         </RoleBasedGuard>
@@ -72,7 +74,6 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
           </Stack>
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.referralCode}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.phoneNumber}</TableCell>
 

@@ -60,6 +60,9 @@ export function TableHeadCustom({
           )}
         </RoleBasedGuard>
 
+        <TableCell sx={{ width: 120, minWidth: 120 }}>Student ID</TableCell>
+        
+
         <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
           <TableCell sx={{ width: '200', minWidth: 250 }}>Counsellor</TableCell>
         </RoleBasedGuard>

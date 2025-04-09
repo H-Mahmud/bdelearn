@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
@@ -12,6 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
+
+import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
@@ -47,26 +48,23 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
   return (
     <>
       <TableRow hover selected={selected} aria-checked={selected} tabIndex={-1}>
-       <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['superAdmin', 'admin'])}>
-        <TableCell padding="checkbox">
+        <RoleBasedGuard
+          currentRole={user.profile}
+          acceptRoles={_.pick(PROFILES, ['superAdmin', 'admin'])}
+        >
+          <TableCell padding="checkbox">
             <Checkbox id={row.id} checked={selected} onClick={onSelectRow} />
           </TableCell>
-       </RoleBasedGuard>
-
-       <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.referralCode}</TableCell>
-
-        <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
-          <TableCell sx={{ whiteSpace: 'nowrap' }}>Counselor Name</TableCell>
         </RoleBasedGuard>
+
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.referralCode}</TableCell>
 
         <TableCell>
           <Stack spacing={2} direction="row" alignItems="center">
             <Avatar alt={fullName} src={row?.avatarUrl} />
 
             <Stack sx={{ typography: 'body2', flex: '1 1 auto', alignItems: 'flex-start' }}>
-              <Link color="inherit" onClick={onEditRow} sx={{ cursor: 'pointer' }}>
-                {fullName}
-              </Link>
+              {fullName}
               <Box component="span" sx={{ color: 'text.disabled' }}>
                 {row.email}
               </Box>
@@ -74,9 +72,11 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
           </Stack>
         </TableCell>
 
+        <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
+          <TableCell sx={{ whiteSpace: 'nowrap' }}>Counselor Name</TableCell>
+        </RoleBasedGuard>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{row.phoneNumber}</TableCell>
-
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{createdAt}</TableCell>
 
         <TableCell>
@@ -94,6 +94,17 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
         </TableCell>
 
         <TableCell>
+          <IconButton
+            component={RouterLink}
+            target="_blank"
+            href={`whatsapp://send?phone=${row.phoneNumber}`}
+          ><Iconify icon="ic:baseline-whatsapp" width={32} color="#25d366" />
+          </IconButton>
+        </TableCell>
+
+
+       <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['superAdmin', 'admin'])}>
+       <TableCell>
           <Stack direction="row" alignItems="center">
             <Tooltip title="Quick Edit" placement="top" arrow>
               <IconButton
@@ -109,6 +120,7 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
             </IconButton>
           </Stack>
         </TableCell>
+       </RoleBasedGuard>
       </TableRow>
 
       <UserQuickEditForm currentUser={row} open={quickEdit.value} onClose={quickEdit.onFalse} />

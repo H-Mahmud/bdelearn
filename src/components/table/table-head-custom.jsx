@@ -1,11 +1,9 @@
 import _ from 'lodash';
 
-import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
-import TableSortLabel from '@mui/material/TableSortLabel';
 
 import { PROFILES } from 'src/auth';
 
@@ -30,10 +28,6 @@ const visuallyHidden = {
 export function TableHeadCustom({
   user,
   sx,
-  order,
-  onSort,
-  orderBy,
-  headLabel,
   rowCount = 0,
   numSelected = 0,
   onSelectAllRows,
@@ -61,39 +55,16 @@ export function TableHeadCustom({
         </RoleBasedGuard>
 
         <TableCell sx={{ width: 120, minWidth: 120 }}>Student ID</TableCell>
-        
+        <TableCell>Name</TableCell>
 
         <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['student'])}>
-          <TableCell sx={{ width: '200', minWidth: 250 }}>Counsellor</TableCell>
+          <TableCell sx={{ width: 200, minWidth: 250 }}>Counsellor</TableCell>
         </RoleBasedGuard>
 
-        {headLabel.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.align || 'left'}
-            sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ width: headCell.width, minWidth: headCell.minWidth }}
-          >
-            {onSort ? (
-              <TableSortLabel
-                hideSortIcon
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={() => onSort(headCell.id)}
-              >
-                {headCell.label}
-
-                {orderBy === headCell.id ? (
-                  <Box sx={{ ...visuallyHidden }}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-            ) : (
-              headCell.label
-            )}
-          </TableCell>
-        ))}
+        <TableCell sx={{ width: 160, minWidth: 120 }}>Phone number</TableCell>
+        <TableCell sx={{ width: 200, minWidth: 120 }}>Joined</TableCell>
+        <TableCell sx={{ width: 40, minWidth: 40 }}>Status</TableCell>
+        <TableCell  sx={{ width: 40, minWidth: 40 }}>Whatsapp</TableCell>
       </TableRow>
     </TableHead>
   );

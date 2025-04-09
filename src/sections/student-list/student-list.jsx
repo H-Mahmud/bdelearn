@@ -43,10 +43,7 @@ import { UserTableFiltersResult } from './user-table-filters-result';
 
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name' },
-  { id: 'phoneNumber', label: 'Phone number', width: 180 },
-  { id: 'createdAt', label: 'Joined', width: 180 },
-  { id: 'status', label: 'Status', width: 100 },
+  
   { id: '', width: 88 },
 ];
 
@@ -169,12 +166,8 @@ export default function StudentList({data}) {
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
                   user={user}
-                  order={table.order}
-                  orderBy={table.orderBy}
-                  headLabel={TABLE_HEAD}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}
-                  onSort={table.onSort}
                   onSelectAllRows={(checked) =>
                     table.onSelectAllRows(
                       checked,

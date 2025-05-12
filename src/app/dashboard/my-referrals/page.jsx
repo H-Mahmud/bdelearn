@@ -54,10 +54,10 @@ export default async function MyReferralsPage({searchParams }) {
     ]
   }
 
-  const students = await db.user.findMany({where})
+  const students = await db.user.findMany({where, orderBy: [{createdAt: 'desc'}]})
   const studentCountByStatus = await getUserCountByStatus();
 
-  const currentUser = await db.user.findUnique({where: {
+  const currentUser = await db.user.findUnique({ where: {
     id: (await getUserId())
   }, select: {
     profile: true

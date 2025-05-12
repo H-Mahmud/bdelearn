@@ -62,6 +62,7 @@ export const PROFILES = {
 
 export const CURRENT_USER_CAN = {
   deleteStudent: 'DELETE_STUDENT',
+  editUser: 'EDIT_USER'
 };
 
 export async function currentUserCan($option) {

@@ -27,7 +27,6 @@ import { RoleBasedGuard } from 'src/auth/guard';
 
 import { UserQuickEditForm } from '../user/user-quick-edit-form';
 
-// ----------------------------------------------------------------------
 
 export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDeleteRow }) {
   const confirm = useBoolean();

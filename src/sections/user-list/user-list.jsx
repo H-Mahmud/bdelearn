@@ -33,23 +33,14 @@ import {
   TablePaginationCustom,
 } from 'src/components/table';
 
+import UserTableTabs from './user-table-tabs';
 import { UserTableRow } from './user-table-row';
-import StudentTableTabs from './student-table-tabs';
+import { UserTableHead } from './user-table-head';
 import { UserTableToolbar } from './user-table-toolbar';
-import { StudentTableHead } from './student-table-head';
 import { UserTableFiltersResult } from './user-table-filters-result';
 
-// ----------------------------------------------------------------------
 
-
-const TABLE_HEAD = [
-  
-  { id: '', width: 88 },
-];
-
-// ----------------------------------------------------------------------
-
-export default function StudentList({data}) {
+export default function UserList({data}) {
   const table = useTable();
 
   const router = useRouter();
@@ -129,7 +120,7 @@ export default function StudentList({data}) {
   return (
     <>
         <Card>
-         <StudentTableTabs data={{studentCount, statuses, params}} />
+         <UserTableTabs data={{studentCount, statuses, params}} />
 
           <UserTableToolbar data={{params}} onResetPage={table.onResetPage} />
 
@@ -164,7 +155,7 @@ export default function StudentList({data}) {
 
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
-                <StudentTableHead
+                <UserTableHead
                   user={user}
                   rowCount={dataFiltered.length}
                   numSelected={table.selected.length}

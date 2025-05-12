@@ -9,10 +9,7 @@ import { PROFILES } from 'src/auth';
 
 import { RoleBasedGuard } from 'src/auth/guard';
 
-
-// ----------------------------------------------------------------------
-
-export function StudentTableHead({
+export function UserTableHead({
   user,
   sx,
   rowCount = 0,

@@ -12,7 +12,7 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import StudentList from 'src/sections/student-list/student-list';
+import UserList from 'src/sections/user-list';
 
 
 const STATUS_OPTION = [
@@ -80,7 +80,7 @@ export default async function MyReferralsPage({searchParams }) {
         }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
-      <StudentList data={{
+      <UserList data={{
          studentList: students,
          studentCount: studentCountByStatus,
          statuses: STATUS_OPTION,

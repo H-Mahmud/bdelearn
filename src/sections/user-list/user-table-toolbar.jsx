@@ -9,8 +9,6 @@ import { paths } from 'src/routes/paths';
 
 import { Iconify } from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 export function UserTableToolbar({ data: {params}, onResetPage }) {
 
   return (

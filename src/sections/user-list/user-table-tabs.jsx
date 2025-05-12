@@ -9,7 +9,7 @@ import { varAlpha } from 'src/theme/styles';
 
 import { Label } from 'src/components/label';
 
-export default function StudentTableTabs({ data }) {
+export default function UserTableTabs({ data }) {
   const {statuses, studentCount, params} = data;
   const [value, setValue,] = useState(params?.status ?? '');
 

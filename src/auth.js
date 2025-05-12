@@ -59,3 +59,11 @@ export const PROFILES = {
   trainer: 'TRAINER',
   superAdmin: 'SUPER_ADMIN',
 };
+
+export const CURRENT_USER_CAN = {
+  deleteStudent: 'DELETE_STUDENT',
+};
+
+export async function currentUserCan($option) {
+  return false;
+}

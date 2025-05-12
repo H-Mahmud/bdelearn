@@ -49,6 +49,9 @@ export function UserTableHead({
         <TableCell sx={{ width: 200, minWidth: 120 }}>Joined</TableCell>
         <TableCell sx={{ width: 40, minWidth: 40 }}>Status</TableCell>
         <TableCell  sx={{ width: 40, minWidth: 40 }}>Whatsapp</TableCell>
+         <RoleBasedGuard currentRole={user.profile} acceptRoles={_.pick(PROFILES, ['superAdmin', 'admin'])}>
+          <TableCell sx={{width: 20, minWidth: 20}}/>
+         </RoleBasedGuard>
       </TableRow>
     </TableHead>
   );

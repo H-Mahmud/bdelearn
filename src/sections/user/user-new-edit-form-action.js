@@ -22,6 +22,7 @@ export default async function userNewEditFormAction(values) {
       zipCode,
       bio,
       isVerified,
+      password
     } = values;
 
     if (id) {
@@ -45,8 +46,8 @@ export default async function userNewEditFormAction(values) {
       });
 
       return { success: true, action: 'updated' };
-    }
-    await db.user.create({
+    } 
+     await db.user.create({
       data: {
         firstName,
         lastName,
@@ -59,9 +60,14 @@ export default async function userNewEditFormAction(values) {
         zipCode,
         bio,
         isVerified,
+        password
       },
     });
+
+    console.log('created')
     return { success: true, action: 'created' };
+    
+
   } catch (error) {
     if (error instanceof Error) {
       return { field: 'root', message: error.message };

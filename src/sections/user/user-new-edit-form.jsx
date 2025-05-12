@@ -9,12 +9,16 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { IconButton, InputAdornment } from '@mui/material';
 
 import { useRouter } from 'src/routes/hooks';
+
+import { useBoolean } from 'src/hooks/use-boolean';
 
 import { fData } from 'src/utils/format-number';
 
 import { Label } from 'src/components/label';
+import { Iconify } from 'src/components/iconify';
 import { toast, Snackbar } from 'src/components/snackbar';
 import { Form, Field, schemaHelper } from 'src/components/hook-form';
 
@@ -27,7 +31,7 @@ export const NewUserSchema = zod.object({
   // photoURL: schemaHelper.file({
   //   message: { required_error: 'Avatar is required!' },
   // }),
-  id: zod.string().optional(),
+  id: zod.string().optional().nullable(),
   firstName: zod.string().min(1, { message: 'First Name is required!' }),
   lastName: zod.string().min(1, { message: 'Last Name is required!' }),
   email: zod
@@ -53,16 +57,23 @@ export const NewUserSchema = zod.object({
   bio: zod.string().min(1, { message: 'About is required!' }),
   // status: zod.string(),
   isVerified: zod.boolean(),
+
+  // new user only
+  password: zod
+    .string()
+      .min(1, { message: 'Password is required!' })
+    .min(6, { message: 'Password must be at least 6 characters!' }).nullable(),
 });
 
 // ----------------------------------------------------------------------
 
 export function UserNewEditForm({ currentUser }) {
   const router = useRouter();
+  const password = useBoolean();
 
   const defaultValues = useMemo(
     () => ({
-      id: currentUser?.id || null,
+      id: currentUser?.id || '',
       // photoURL: currentUser?.photoURL || null, 
       firstName: currentUser?.firstName || '',
       lastName: currentUser?.lastName || '', 
@@ -76,6 +87,7 @@ export function UserNewEditForm({ currentUser }) {
       bio: currentUser?.bio || '',
       isVerified: currentUser?.isVerified || true,
       // status: currentUser?.status || '',
+      password: currentUser ? null : ''
     }),
     [currentUser]
   );
@@ -99,11 +111,13 @@ export function UserNewEditForm({ currentUser }) {
 
   const onSubmit = handleSubmit(async (data) => {
       const result = await userNewEditFormAction(data);
+
+      console.log(result);
       if(result.success) {
        toast.success(currentUser ? 'Update success!' : 'Create success!');
-        if(!currentUser)  reset();
+        // if(!currentUser)  reset();
       } else {
-        setError(result.field, {type: 'server', message: result.error})
+        setError(result.field, {type: 'server', message: result.message})
       }
   });
 
@@ -239,7 +253,23 @@ export function UserNewEditForm({ currentUser }) {
               <Field.Text name="city" label="City" />
               <Field.Text name="address" label="Address" />
               <Field.Text name="zipCode" label="Zip/code" />
-              <Field.Text name="id" label="User ID" disabled />
+              {currentUser && <Field.Text name="id" label="User ID" disabled />}
+              {!currentUser && <Field.Text
+        name="password"
+        label="Password"
+        placeholder="6+ characters"
+        type={password.value ? 'text' : 'password'}
+        InputLabelProps={{ shrink: true }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={password.onToggle} edge="end">
+                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />}
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>

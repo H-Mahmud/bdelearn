@@ -11,3 +11,6 @@ export default async function SubAdminListPage() {
   const userList = await getSubAdminList();
   return <UserCardsView userList={userList} />;
 }
+
+export const dynamic = 'force-dynamic';
+

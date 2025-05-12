@@ -90,6 +90,10 @@ export default async function StudentListPage({searchParams }) {
     </DashboardContent>
   );
 }
+
+export const dynamic = 'force-dynamic';
+
+
 // const TABLE_HEAD = [
 //   { id: 'name', label: 'Name' },
 //   { id: 'referralCode', label: 'Referral ID', width: 180 },

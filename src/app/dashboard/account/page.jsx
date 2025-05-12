@@ -16,3 +16,5 @@ export default async function AccountPage() {
     </DashboardContent>
   );
 }
+
+export const dynamic = 'force-dynamic';

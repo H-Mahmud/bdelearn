@@ -14,3 +14,6 @@ export default async function Page({params}) {
 
   return <UserEditView user={currentUser} />;
 }
+
+export const dynamic = 'force-dynamic';
+

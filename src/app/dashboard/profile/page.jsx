@@ -17,3 +17,5 @@ export default async function ProfilePage() {
   const user = _.omit(userObject, ['password'])
   return <UserProfileView data={{user}} />;
 }
+
+export const dynamic = 'force-dynamic';

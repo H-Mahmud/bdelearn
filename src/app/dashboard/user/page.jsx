@@ -9,3 +9,5 @@ export const metadata = { title: `User profile | Dashboard - ${CONFIG.site.name}
 export default function Page() {
   return <UserProfileView />;
 }
+export const dynamic = 'force-dynamic';
+

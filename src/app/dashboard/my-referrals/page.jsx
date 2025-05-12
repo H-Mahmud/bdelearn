@@ -90,3 +90,6 @@ export default async function MyReferralsPage({searchParams }) {
     </DashboardContent>
   );
 }
+
+export const dynamic = 'force-dynamic';
+

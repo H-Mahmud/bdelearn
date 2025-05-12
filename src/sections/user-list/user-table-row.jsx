@@ -25,7 +25,6 @@ import { usePopover, CustomPopover } from 'src/components/custom-popover';
 
 import { RoleBasedGuard } from 'src/auth/guard';
 
-import { UserQuickEditForm } from '../user/user-quick-edit-form';
 
 
 export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDeleteRow }) {
@@ -122,7 +121,7 @@ export function UserTableRow({ user, row, selected, onEditRow, onSelectRow, onDe
        </RoleBasedGuard>
       </TableRow>
 
-      <UserQuickEditForm currentUser={row} open={quickEdit.value} onClose={quickEdit.onFalse} />
+      {/* <UserQuickEditForm currentUser={row} open={quickEdit.value} onClose={quickEdit.onFalse} /> */}
 
       <CustomPopover
         open={popover.open}

@@ -90,3 +90,11 @@ export default async function StudentListPage({searchParams }) {
     </DashboardContent>
   );
 }
+// const TABLE_HEAD = [
+//   { id: 'name', label: 'Name' },
+//   { id: 'referralCode', label: 'Referral ID', width: 180 },
+//   { id: 'phoneNumber', label: 'Phone number', width: 180 },
+//   { id: 'createdAt', label: 'Joined', width: 180 },
+//   { id: 'status', label: 'Status', width: 100 },
+//   { id: '', width: 88 },
+// ];

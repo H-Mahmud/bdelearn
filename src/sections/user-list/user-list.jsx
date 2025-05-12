@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -15,8 +15,6 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useSetState } from 'src/hooks/use-set-state';
-
-import { fetchUserList } from 'src/server-actions/user';
 
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
@@ -54,17 +52,6 @@ export default function UserList({data}) {
    */
   const [tableData, setTableData] = useState([]);
   const filters = useSetState({ name: '', role: [], status: 'all' });
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const userData = await fetchUserList(filters.state);
-        setTableData(userData);
-      } catch (error) {
-        toast.error('Failed to fetch user data');
-      }
-    })();
-  }, [filters.state]);
 
 
   const dataFiltered = applyFilter({

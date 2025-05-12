@@ -1,7 +1,5 @@
 'use client';
 
-import { toast } from 'sonner';
-import { useState, useEffect } from 'react';
 
 import Button from '@mui/material/Button';
 
@@ -9,7 +7,6 @@ import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import { DashboardContent } from 'src/layouts/dashboard';
-import { fetchSubAdminList } from 'src/server-actions/user';
 
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
@@ -18,20 +15,7 @@ import { UserCardList } from '../user-card-list';
 
 // ----------------------------------------------------------------------
 
-export function UserCardsView() {
-  const [userList, seUserList] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const users = await fetchSubAdminList();
-        seUserList(users);
-      } catch (error) {
-        toast.error('Failed to fetch user data');
-      }
-    })();
-  }, []);
-
+export function UserCardsView({userList}) {
   return (
     <DashboardContent>
       <CustomBreadcrumbs
